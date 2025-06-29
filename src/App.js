@@ -1,21 +1,31 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navigation from './components/Navigation';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Landing from './components/Landing';
 import CV from './components/CV';
 import Work from './components/Work';
+import Info from './components/Info';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navigation />
-        <main className="container mx-auto px-4 py-8">
-          <Routes>
-            <Route path="/" element={<CV />} />
-            <Route path="/work" element={<Work />} />
-          </Routes>
-        </main>
-      </div>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/info" element={<Info />} />
+        <Route
+          path="/*"
+          element={
+            <div className="min-h-screen bg-white">
+              <main className="container mx-auto px-4 py-8">
+                <Routes>
+                  <Route path="cv" element={<CV />} />
+                  <Route path="work" element={<Work />} />
+                  <Route path="*" element={<Navigate to="/cv" />} />
+                </Routes>
+              </main>
+            </div>
+          }
+        />
+      </Routes>
     </Router>
   );
 }
