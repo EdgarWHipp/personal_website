@@ -49,4 +49,5 @@ export default function Info() {
       </footer>
     </div>
   );
-} 
+}
+

@@ -18,25 +18,27 @@ const imageFilenames = [
 function ImageWithLoader({ src, alt }) {
   const [loaded, setLoaded] = useState(false);
   return (
-    <div className="relative flex justify-center items-center w-full max-w-xs" style={{ minHeight: '150px' }}>
+    <div
+      className="relative flex justify-center items-center w-full max-w-xs"
+      style={{ minHeight: '150px', aspectRatio: '4/3' }}
+    >
+      {/* Blur placeholder */}
       {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-6 h-6 border-2 border-gray-200 border-t-primary-500 rounded-full animate-spin" />
-        </div>
+        <div className="absolute inset-0 bg-gray-100 animate-pulse rounded" />
       )}
       <img
         src={src}
         alt={alt}
-        className={`object-contain max-h-60 w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        className={`object-contain max-h-60 w-full h-full rounded transition-all duration-700 ${loaded ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-105 blur-sm'}`}
         loading="lazy"
         onLoad={() => setLoaded(true)}
+        style={{ aspectRatio: '4/3' }}
       />
     </div>
   );
 }
 
 export default function Hobbies() {
-  // Split images for left and right columns
   const mid = Math.ceil(imageFilenames.length / 2);
   const leftImages = imageFilenames.slice(0, mid);
   const rightImages = imageFilenames.slice(mid);
