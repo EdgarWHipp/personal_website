@@ -5,7 +5,7 @@ export default function Landing() {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-      <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight mb-10 uppercase text-black select-none" style={{letterSpacing: '0.04em'}}>
+      <h1 className="text-6xl md:text-6.3xl font-extrabold tracking-tight mb-10 uppercase text-black select-none" style={{letterSpacing: '0.04em'}}>
         Edgar H.
       </h1>
       <p className="text-lg md:text-2xl text-gray-400 mb-20 tracking-wide uppercase select-none">Software / Photos / Teaching / Language</p>

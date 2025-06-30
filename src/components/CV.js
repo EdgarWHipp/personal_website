@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const sections = [
   { title: 'Info', href: '/info' },
-  { title: 'Software', href: '#' },
-  { title: 'Experience', href: '#' },
-  { title: 'Hobbies', href: '#' },
+  { title: 'Software', href: '/software' },
+  { title: 'Experience', href: '/experience' },
+  { title: 'Hobbies', href: '/hobbies' },
 ];
 
 export default function CV() {
@@ -14,7 +14,7 @@ export default function CV() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <div className="w-full max-w-xl mx-auto flex flex-col gap-6">
         {sections.map((section) => (
-          section.title === 'Info' ? (
+          section.href.startsWith('/') ? (
             <Link
               key={section.title}
               to={section.href}

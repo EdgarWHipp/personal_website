@@ -4,6 +4,8 @@ import Landing from './components/Landing';
 import CV from './components/CV';
 import Work from './components/Work';
 import Info from './components/Info';
+import Hobbies from './components/Hobbies';
+import Experience from './components/Experience';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/info" element={<Info />} />
+        <Route path="/hobbies" element={<Hobbies />} />
+        <Route path="/experience" element={<Experience />} />
         <Route
           path="/*"
           element={
