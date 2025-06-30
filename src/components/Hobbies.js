@@ -56,7 +56,7 @@ export default function Hobbies() {
         </div>
       </div>
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
-        ©{new Date().getFullYear()} Edgar H.
+        ©{new Date().getFullYear()} Edgar H.      Site by Coolify, Cloudflare
       </footer>
     </div>
   );
