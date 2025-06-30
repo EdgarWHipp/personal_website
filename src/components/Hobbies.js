@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const infoText = `I was thinking of starting a little blog in this section of the website. It's something I've never tried before, and I think it could boost my creativity. Throughout my academic journey, I've often struggled to find time to relax and keep an open mind. However, since starting my master's degree, I've experienced greater mental freedom. I started studying French intensively after my semester abroad, picked up the piano again, and took up cooking in my spare time. I also enjoy spending time in nature to clear my head.`;
+const infoText = `I was thinking of starting a quirky blog in this section of the website. It's something I've never tried before, and I think it could boost my creativity. Throughout my academic journey, I've often struggled to find time to relax and keep an open mind. However, since starting my master's degree, I've experienced greater mental freedom. I started studying French intensively after my semester abroad, picked up the piano again, and took up cooking in my spare time. I also enjoy spending time in nature to clear my head.`;
 // All images from public/hobbies/
 const imageFilenames = [
   'bb4cb569-c469-4ca4-a825-9960ad865329.jpg',
@@ -15,6 +15,26 @@ const imageFilenames = [
   '9F2D336A-CF66-4488-A4FA-689327DFCF3E_1_105_c.jpeg',
 ];
 
+function ImageWithLoader({ src, alt }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div className="relative flex justify-center items-center w-full max-w-xs" style={{ minHeight: '150px' }}>
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-gray-200 border-t-primary-500 rounded-full animate-spin" />
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`object-contain max-h-60 w-full transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        loading="lazy"
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
+}
+
 export default function Hobbies() {
   // Split images for left and right columns
   const mid = Math.ceil(imageFilenames.length / 2);
@@ -27,12 +47,10 @@ export default function Hobbies() {
         {/* Left column images */}
         <div className="flex flex-col gap-8 items-end flex-1">
           {leftImages.map((filename, idx) => (
-            <img
+            <ImageWithLoader
               key={filename}
               src={`/hobbies/${filename}`}
               alt={`Hobby ${idx + 1}`}
-              className="object-contain max-h-60 w-full max-w-xs"
-              loading="lazy"
             />
           ))}
         </div>
@@ -45,12 +63,10 @@ export default function Hobbies() {
         {/* Right column images */}
         <div className="flex flex-col gap-8 items-start flex-1">
           {rightImages.map((filename, idx) => (
-            <img
+            <ImageWithLoader
               key={filename}
               src={`/hobbies/${filename}`}
               alt={`Hobby ${idx + 1 + mid}`}
-              className="object-contain max-h-60 w-full max-w-xs"
-              loading="lazy"
             />
           ))}
         </div>
