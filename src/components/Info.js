@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const infoText = `I'm currently studying Business Administration at ECUST in Shanghai, and I've got a solid background in Computer Science, DevOps and Automation. I've competed in multiple AI hackathons in Berlin, been an IT Consulting Intern at PwC and a Cloud Software Engineer at SAP SE. I've also been a Microsoft Student Learn Ambassador and a Data Analyst at 1&1, where I gained experience in all kinds of technologies and industries.\n\nI'm skilled in Java, Python, Bash, Go and Groovy, and I'm fluent in English and German, with good knowledge in French.`;
+const infoText = `I'm currently studying Business Administration at ECUST in Shanghai, and I've got a solid background in Computer Science, DevOps and Automation. I've competed in multiple AI hackathons in Berlin, been an IT Consulting Intern at PwC and a Cloud Software Engineer at SAP SE. I've also been a Microsoft Student Learn Ambassador and a Data Analyst at 1&1, where I gained experience in all kinds of technologies and industries.`;
 
 export default function Info() {
   const [time, setTime] = useState('');

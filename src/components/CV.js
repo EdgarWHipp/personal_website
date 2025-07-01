@@ -6,7 +6,7 @@ const sections = [
   { title: 'Info', href: '/info' },
   { title: 'Software', href: '/software' },
   { title: 'Experience', href: '/experience' },
-  { title: 'Hobbies', href: '/hobbies' },
+  { title: 'Hobbies & Blog', href: '/hobbies' },
 ];
 
 export default function CV() {
