@@ -2,10 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const experiences = [
-  { title: 'Cloud Software Engineer', place: 'SAP SE', year: '2023' },
-  { title: 'IT Consulting Intern', place: 'PwC', year: '2022' },
-  { title: 'Data Analyst', place: '1&1', year: '2021' },
-  { title: 'Microsoft Student Learn Ambassador', place: 'Microsoft', year: '2020' },
+  { title: 'IT Consulting Intern', place: 'PwC', year: '2025' },
+  { title: 'Invited AI Hackathon Participant', place: 'AI Hackathon Berlin from {Tech: Europe}', year: 'Apr. 2025' },
+  { title: 'AI Hackathon Participant', place: 'AI Hackathon Berlin from {Tech: Europe}', year: 'Feb. 2025' },
+  { title: 'Cloud Software Engineer - Working Student', place: 'SAP SE', year: '2023 - 2024' },
+  { title: 'Microsoft Student Learn Ambassador', place: 'Microsoft', year: '2023 - 2024' },
+  { title: 'Data Engineer - Working Student', place: '1&1 SE', year: '2022 - 2023' },
+  { title: 'Teaching Assistant', place: 'Karlsruher Institut für Technologie (KIT)', year: '2021 - 2022' },
+ 
   // Add more experiences as needed
 ];
 
@@ -34,7 +38,7 @@ export default function Experience() {
         ))}
       </div>
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
-        ©{new Date().getFullYear()} Edgar H.      Site by Coolify, Cloudflare
+        ©{new Date().getFullYear()} Edgar H. | Site by Coolify, Cloudflare
       </footer>
     </div>
   );
