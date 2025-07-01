@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const experiences = [
   { title: 'Cloud Software Engineer', place: 'SAP SE', year: '2023' },
@@ -9,8 +10,17 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center min-h-screen bg-white pt-16">
+    <div className="flex flex-col items-center min-h-screen bg-white pt-16 relative">
+      {/* Back button top left */}
+      <button
+        onClick={() => navigate('/cv')}
+        className="absolute left-8 top-8 text-xs md:text-sm px-6 py-2 border-b border-neutral-400 text-neutral-500 hover:text-neutral-800 hover:border-neutral-800 transition-colors bg-transparent focus:outline-none z-20"
+        style={{ letterSpacing: '0.08em' }}
+      >
+        &#8592;
+      </button>
       <div className="w-full max-w-xl mx-auto flex flex-col gap-4 mt-0">
         {experiences.map((exp, idx) => (
           <div key={idx} className="flex flex-col mb-2">
