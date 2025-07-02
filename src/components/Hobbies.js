@@ -68,7 +68,7 @@ export default function Hobbies() {
       {/* Back button top left */}
       <button
         onClick={() => navigate('/cv')}
-        className="absolute left-8 top-8 text-xs md:text-sm px-6 py-2 border-b border-neutral-400 text-neutral-500 hover:text-neutral-800 hover:border-neutral-800 transition-colors bg-transparent focus:outline-none z-20"
+        className="absolute left-8 top-8 text-xs md:text-sm px-6 py-2 border-b border-neutral-400 text-neutral-500 hover:text-neutral-800 hover:border-neutral-800 transition-colors bg-transparent focus:outline-none focus:ring-0 outline-none z-20"
         style={{ letterSpacing: '0.08em' }}
       >
         &#8592;
@@ -93,7 +93,7 @@ export default function Hobbies() {
                 <img
                   src={`/hobbies/${imageFilenames[current]}`}
                   alt={`Hobby ${current + 1}`}
-                  className={`object-contain w-full max-w-2xl transition-all duration-700 ${imgLoaded[current] ? 'blur-0' : 'blur-sm'}`}
+                  className={`object-contain w-full max-w-2xl transition-all duration-700 outline-none ${imgLoaded[current] ? 'blur-0' : 'blur-sm'}`}
                   loading="lazy"
                   onLoad={() => handleImgLoad(current)}
                   style={{ aspectRatio: '4/3', height: '260px', width: '100%', maxWidth: '480px' }}
