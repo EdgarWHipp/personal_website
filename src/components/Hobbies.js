@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // All images from public/hobbies/
@@ -41,7 +41,18 @@ export default function Hobbies() {
   const [current, setCurrent] = useState(0);
   const [imgLoaded, setImgLoaded] = useState(Array(imageFilenames.length).fill(false));
   const [showTooltip, setShowTooltip] = useState(false);
+  const [viewerOpen, setViewerOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Close viewer on Escape
+  useEffect(() => {
+    if (!viewerOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setViewerOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [viewerOpen]);
 
   const handleImgLoad = idx => {
     setImgLoaded(l => {
@@ -96,7 +107,9 @@ export default function Hobbies() {
                   className={`object-contain w-full max-w-2xl transition-all duration-700 outline-none ${imgLoaded[current] ? 'blur-0' : 'blur-sm'}`}
                   loading="lazy"
                   onLoad={() => handleImgLoad(current)}
-                  style={{ aspectRatio: '4/3', height: '260px', width: '100%', maxWidth: '480px' }}
+                  style={{ aspectRatio: '4/3', height: '260px', width: '100%', maxWidth: '480px', cursor: 'zoom-in' }}
+                  onClick={() => setViewerOpen(true)}
+                  tabIndex={0}
                 />
               </div>
               <div className="text-xs md:text-sm text-neutral-500 select-none text-center" style={{ fontFamily: 'inherit', height: '28px', marginTop: '20px' }}>
@@ -131,6 +144,22 @@ export default function Hobbies() {
           </div>
         </div>
       </div>
+      {/* Image viewer modal */}
+      {viewerOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cursor-zoom-out"
+          onClick={() => setViewerOpen(false)}
+        >
+          <img
+            src={`/hobbies/${imageFilenames[current]}`}
+            alt={`Hobby ${current + 1}`}
+            className="max-w-full max-h-[90vh] object-contain outline-none"
+            style={{ background: 'transparent' }}
+            onClick={e => e.stopPropagation()}
+            tabIndex={0}
+          />
+        </div>
+      )}
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
         ©{new Date().getFullYear()} Edgar H.      Site by Coolify, Cloudflare
       </footer>
