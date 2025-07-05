@@ -38,6 +38,16 @@ const Navigation = () => {
             >
               Work
             </Link>
+            <Link
+              to="/software"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive('/software')
+                  ? 'text-primary-600 bg-primary-50'
+                  : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50'
+              }`}
+            >
+              Software
+            </Link>
           </div>
         </div>
       </div>
