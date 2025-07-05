@@ -1,15 +1,39 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const experiences = [
-  { title: 'IT Consulting Intern', place: 'PwC', year: '2025' },
-  { title: 'Invited AI Hackathon Participant', place: 'AI Hackathon Berlin from {Tech: Europe}', year: 'Apr. 2025' },
-  { title: 'AI Hackathon Participant', place: 'AI Hackathon Berlin from {Tech: Europe}', year: 'Feb. 2025' },
-  { title: 'Cloud Software Engineer - Working Student', place: 'SAP SE', year: '2023 - 2024' },
-  { title: 'Microsoft Student Learn Ambassador', place: 'Microsoft', year: '2023 - 2024' },
-  { title: 'Data Engineer - Working Student', place: '1&1 SE', year: '2022 - 2023' },
-  { title: 'Teaching Assistant', place: 'Karlsruher Institut für Technologie (KIT)', year: '2021 - 2022' },
- 
+  { title: "IT Consulting Intern", place: "PwC", year: "2025" },
+  {
+    title: "Invited AI Hackathon Participant",
+    place: "AI Hackathon Berlin from {Tech: Europe}",
+    year: "Apr. 2025",
+  },
+  {
+    title: "AI Hackathon Participant",
+    place: "AI Hackathon Berlin from {Tech: Europe}",
+    year: "Feb. 2025",
+  },
+  {
+    title: "Cloud Software Engineer - Working Student",
+    place: "SAP SE",
+    year: "2023 - 2024",
+  },
+  {
+    title: "Microsoft Student Learn Ambassador",
+    place: "Microsoft",
+    year: "2023 - 2024",
+  },
+  {
+    title: "Data Engineer - Working Student",
+    place: "1&1 SE",
+    year: "2022 - 2023",
+  },
+  {
+    title: "Teaching Assistant",
+    place: "Karlsruher Institut für Technologie (KIT)",
+    year: "2021 - 2022",
+  },
+
   // Add more experiences as needed
 ];
 
@@ -19,9 +43,9 @@ export default function Experience() {
     <div className="flex flex-col items-center min-h-screen bg-white pt-16 relative">
       {/* Back button top left */}
       <button
-        onClick={() => navigate('/cv')}
+        onClick={() => navigate("/cv")}
         className="absolute left-8 top-8 text-xs md:text-sm px-6 py-2 border-b border-neutral-400 text-neutral-500 hover:text-neutral-800 hover:border-neutral-800 transition-colors bg-transparent focus:outline-none z-20"
-        style={{ letterSpacing: '0.08em' }}
+        style={{ letterSpacing: "0.08em" }}
       >
         &#8592;
       </button>

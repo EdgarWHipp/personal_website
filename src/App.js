@@ -1,12 +1,17 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Landing from './components/Landing';
-import CV from './components/CV';
-import Work from './components/Work';
-import Info from './components/Info';
-import Hobbies from './components/Hobbies';
-import Experience from './components/Experience';
-import Software from './components/Software';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Landing from "./components/Landing";
+import CV from "./components/CV";
+import Work from "./components/Work";
+import Info from "./components/Info";
+import Hobbies from "./components/Hobbies";
+import Experience from "./components/Experience";
+import Software from "./components/Software";
 
 function App() {
   return (
@@ -36,4 +41,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

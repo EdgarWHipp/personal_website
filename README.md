@@ -37,17 +37,20 @@ A modern, responsive personal CV website built with React and Tailwind CSS. Feat
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <your-repo-url>
 cd personal_website
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm start
 ```
@@ -129,4 +132,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Contact
 
-For questions or suggestions, please open an issue on GitHub or contact [your-email@example.com]. 
+For questions or suggestions, please open an issue on GitHub or contact [your-email@example.com].

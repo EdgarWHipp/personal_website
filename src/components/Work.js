@@ -1,61 +1,73 @@
-import React from 'react';
+import React from "react";
 
 const Work = () => {
   const projects = [
     {
       id: 1,
       title: "E-Commerce Platform",
-      description: "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
+      description:
+        "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
       technologies: ["React", "Node.js", "MongoDB", "Stripe", "Redux"],
       image: "🛒",
       link: "#",
-      github: "#"
+      github: "#",
     },
     {
       id: 2,
       title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      technologies: ["React", "Socket.io", "Express", "PostgreSQL", "Tailwind CSS"],
+      description:
+        "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+      technologies: [
+        "React",
+        "Socket.io",
+        "Express",
+        "PostgreSQL",
+        "Tailwind CSS",
+      ],
       image: "📋",
       link: "#",
-      github: "#"
+      github: "#",
     },
     {
       id: 3,
       title: "Weather Dashboard",
-      description: "A responsive weather application that displays current weather and forecasts using OpenWeatherMap API with beautiful visualizations.",
+      description:
+        "A responsive weather application that displays current weather and forecasts using OpenWeatherMap API with beautiful visualizations.",
       technologies: ["React", "Chart.js", "OpenWeatherMap API", "CSS3"],
       image: "🌤️",
       link: "#",
-      github: "#"
+      github: "#",
     },
     {
       id: 4,
       title: "Portfolio Website",
-      description: "A modern, responsive portfolio website built with React and Tailwind CSS, featuring smooth animations and clean design.",
+      description:
+        "A modern, responsive portfolio website built with React and Tailwind CSS, featuring smooth animations and clean design.",
       technologies: ["React", "Tailwind CSS", "Framer Motion", "Vite"],
       image: "💼",
       link: "#",
-      github: "#"
+      github: "#",
     },
     {
       id: 5,
       title: "Chat Application",
-      description: "Real-time chat application with user authentication, message history, and file sharing capabilities.",
+      description:
+        "Real-time chat application with user authentication, message history, and file sharing capabilities.",
       technologies: ["React", "Socket.io", "Node.js", "MongoDB", "JWT"],
       image: "💬",
       link: "#",
-      github: "#"
+      github: "#",
     },
     {
       id: 6,
       title: "Recipe Finder",
-      description: "A recipe discovery app that allows users to search for recipes, save favorites, and create meal plans.",
+      description:
+        "A recipe discovery app that allows users to search for recipes, save favorites, and create meal plans.",
       technologies: ["React", "Spoonacular API", "LocalStorage", "CSS Grid"],
       image: "🍳",
       link: "#",
-      github: "#"
-    }
+      github: "#",
+    },
   ];
 
   return (
@@ -64,25 +76,36 @@ const Work = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">My Work</h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Here are some of the projects I've worked on. Each project represents different 
-          challenges and learning opportunities in my journey as a developer.
+          Here are some of the projects I've worked on. Each project represents
+          different challenges and learning opportunities in my journey as a
+          developer.
         </p>
       </div>
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project) => (
-          <div key={project.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <div
+            key={project.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+          >
             <div className="p-6">
               <div className="text-4xl mb-4">{project.image}</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">{project.title}</h3>
-              <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
-              
+              <h3 className="text-xl font-bold text-gray-800 mb-3">
+                {project.title}
+              </h3>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                {project.description}
+              </p>
+
               {/* Technologies */}
               <div className="mb-4">
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
-                    <span key={tech} className="bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs font-medium">
+                    <span
+                      key={tech}
+                      className="bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs font-medium"
+                    >
                       {tech}
                     </span>
                   ))}
@@ -116,22 +139,44 @@ const Work = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="border-l-4 border-green-500 pl-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Open Source Contributions</h3>
-            <p className="text-gray-600 mb-3">Active contributor to various open-source projects including React libraries and developer tools.</p>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Open Source Contributions
+            </h3>
+            <p className="text-gray-600 mb-3">
+              Active contributor to various open-source projects including React
+              libraries and developer tools.
+            </p>
             <div className="flex flex-wrap gap-2">
-              <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">React</span>
-              <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Node.js</span>
-              <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">TypeScript</span>
+              <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+                React
+              </span>
+              <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+                Node.js
+              </span>
+              <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+                TypeScript
+              </span>
             </div>
           </div>
-          
+
           <div className="border-l-4 border-blue-500 pl-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Technical Writing</h3>
-            <p className="text-gray-600 mb-3">Published articles on Medium and Dev.to about React best practices and modern web development.</p>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Technical Writing
+            </h3>
+            <p className="text-gray-600 mb-3">
+              Published articles on Medium and Dev.to about React best practices
+              and modern web development.
+            </p>
             <div className="flex flex-wrap gap-2">
-              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">React</span>
-              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">JavaScript</span>
-              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Web Dev</span>
+              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
+                React
+              </span>
+              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
+                JavaScript
+              </span>
+              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
+                Web Dev
+              </span>
             </div>
           </div>
         </div>
@@ -139,9 +184,11 @@ const Work = () => {
 
       {/* Contact Section */}
       <div className="mt-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-md p-8 text-center text-white">
-        <h2 className="text-2xl font-bold mb-4">Interested in Working Together?</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          Interested in Working Together?
+        </h2>
         <p className="text-primary-100 mb-6 max-w-2xl mx-auto">
-          I'm always open to discussing new opportunities and exciting projects. 
+          I'm always open to discussing new opportunities and exciting projects.
           Let's create something amazing together!
         </p>
         <div className="flex justify-center space-x-4">
@@ -163,4 +210,4 @@ const Work = () => {
   );
 };
 
-export default Work; 
+export default Work;
