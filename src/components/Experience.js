@@ -40,7 +40,7 @@ const experiences = [
 export default function Experience() {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center min-h-screen bg-white pt-16 relative">
+    <div className="flex flex-col items-center min-h-screen pt-16 relative main-dark-bg">
       {/* Back button top left */}
       <button
         onClick={() => navigate("/cv")}
@@ -52,17 +52,17 @@ export default function Experience() {
       <div className="w-full max-w-xl mx-auto flex flex-col gap-4 mt-0">
         {experiences.map((exp, idx) => (
           <div key={idx} className="flex flex-col mb-2">
-            <span className="text-sm md:text-base font-normal text-neutral-800 select-none">
+            <span className="text-sm md:text-base font-normal text-neutral-800 dark:text-white select-none">
               {exp.title}
             </span>
-            <span className="text-xs text-neutral-500 select-none">
+            <span className="text-xs text-neutral-500 dark:text-white select-none">
               {exp.place} &middot; {exp.year}
             </span>
           </div>
         ))}
       </div>
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
-        ©{new Date().getFullYear()} Edgar H. | Site by Coolify, Cloudflare
+        ©{new Date().getFullYear()} Edgar H. Site by Coolify, Cloudflare
       </footer>
     </div>
   );
