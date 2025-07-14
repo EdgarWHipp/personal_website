@@ -12,16 +12,20 @@ import Info from "./components/Info";
 import Hobbies from "./components/Hobbies";
 import Experience from "./components/Experience";
 import Software from "./components/Software";
+import CustomCursor from "./components/CustomCursor";
+import Impressum from "./components/Impressum";
 
 function App() {
   return (
     <Router>
+      <CustomCursor />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/info" element={<Info />} />
         <Route path="/hobbies" element={<Hobbies />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/software" element={<Software />} />
+        <Route path="/impressum" element={<Impressum />} />
         <Route
           path="/*"
           element={
@@ -41,4 +45,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

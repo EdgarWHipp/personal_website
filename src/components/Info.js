@@ -38,7 +38,7 @@ export default function Info() {
           <a
             href="/e_hipp.pdf"
             download
-            className="underline hover:text-primary-600 transition-colors duration-200 dark:text-white"
+            className="underline hover:text-orange-500 transition-colors duration-200"
           >
             Download my CV (PDF)
           </a>

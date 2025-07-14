@@ -7,6 +7,7 @@ const sections = [
   { title: "Software", href: "/software" },
   { title: "Experience", href: "/experience" },
   { title: "Hobbies & Blog", href: "/hobbies" },
+  { title: "Impressum", href: "/impressum" },
 ];
 
 export default function CV() {
@@ -21,7 +22,7 @@ export default function CV() {
               className="flex flex-row justify-between items-center group px-2"
               style={{ textDecoration: "none" }}
             >
-              <span className="text-base md:text-lg font-normal text-neutral-800 group-hover:text-primary-600 transition-colors duration-200 select-none">
+              <span className="text-base md:text-lg font-normal text-neutral-800 group-hover:text-orange-500 transition-colors duration-200 select-none">
                 {section.title}
               </span>
             </Link>
@@ -32,7 +33,7 @@ export default function CV() {
               className="flex flex-row justify-between items-center group px-2"
               style={{ textDecoration: "none" }}
             >
-              <span className="text-base md:text-lg font-normal text-neutral-800 group-hover:text-primary-600 transition-colors duration-200 select-none">
+              <span className="text-base md:text-lg font-normal text-neutral-800 group-hover:text-orange-500 transition-colors duration-200 select-none">
                 {section.title}
               </span>
             </a>

@@ -16,7 +16,7 @@ export default function Landing() {
       </p>
       <button
         onClick={() => navigate("/cv")}
-        className="text-2xl md:text-3xl font-light border-b border-black hover:text-primary-600 hover:border-primary-600 transition-colors duration-200 px-10 py-2 tracking-widest uppercase bg-transparent focus:outline-none focus:ring-2 focus:ring-primary-500"
+        className="text-2xl md:text-3xl font-light border-b border-black hover:text-orange-500 hover:border-orange-500 transition-colors duration-200 px-10 py-2 tracking-widest uppercase bg-transparent focus:outline-none focus:ring-2 focus:ring-orange-500"
         style={{ letterSpacing: "0.15em" }}
       >
         Enter
