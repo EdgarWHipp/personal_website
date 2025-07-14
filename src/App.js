@@ -14,6 +14,7 @@ import Experience from "./components/Experience";
 import Software from "./components/Software";
 import CustomCursor from "./components/CustomCursor";
 import Impressum from "./components/Impressum";
+import Bwell from "./components/Bwell";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/hobbies" element={<Hobbies />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/software" element={<Software />} />
+        <Route path="/bwell" element={<Bwell />} />
         <Route path="/impressum" element={<Impressum />} />
         <Route
           path="/*"

@@ -3,9 +3,31 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [trail, setTrail] = useState([]);
+  const [isBwellPage, setIsBwellPage] = useState(false);
   const animationRef = useRef();
 
   useEffect(() => {
+    // Check if on Bwell page
+    const checkPage = () => {
+      setIsBwellPage(window.location.pathname === '/bwell');
+    };
+    
+    checkPage();
+    
+    // Listen for navigation changes
+    const handlePopState = () => {
+      checkPage();
+    };
+    
+    window.addEventListener('popstate', handlePopState);
+    
+    // Also check on initial load and when navigating
+    const observer = new MutationObserver(() => {
+      checkPage();
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+
     const handleMouseMove = (e) => {
       const newPosition = { x: e.clientX, y: e.clientY };
       setMousePosition(newPosition);
@@ -37,6 +59,8 @@ export default function CustomCursor() {
     
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('popstate', handlePopState);
+      observer.disconnect();
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -44,13 +68,15 @@ export default function CustomCursor() {
     };
   }, []);
 
+  const emissionColor = isBwellPage ? 'bg-blue-400' : 'bg-orange-400';
+
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
-      {/* Trail elements - optimized for performance */}
+      {/* Trail elements - color changes based on page */}
       {trail.map((position, index) => (
         <div
           key={index}
-          className="absolute bg-orange-400 rounded-full"
+          className={`absolute ${emissionColor} rounded-full`}
           style={{
             left: `${position.x - 3}px`,
             top: `${position.y - 3}px`,
