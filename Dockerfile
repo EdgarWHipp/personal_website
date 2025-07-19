@@ -1,7 +1,7 @@
 # syntax=docker.io/docker/dockerfile:1
 
 # Build stage
-FROM node:18-alpine as build
+FROM node:18-alpine AS build
 
 # Set working directory
 WORKDIR /app
