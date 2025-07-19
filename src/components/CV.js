@@ -11,8 +11,8 @@ const sections = [
     title: "Software to test", 
     href: "#",
     subItems: [
-      { title: "Bwell", href: "/bwell" },
-      { title: "fluencypunch", href: "/fluencypunch" }
+      { title: "Bwell (under construction)", href: "/cv" },
+      { title: "Knockout", href: "/knockout-main" }
     ]
   },
   { title: "Impressum", href: "/impressum" },

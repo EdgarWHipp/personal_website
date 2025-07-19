@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import FramerLanding from "./components/FramerLanding";
 import Landing from "./components/Landing";
 import CV from "./components/CV";
 import Work from "./components/Work";
@@ -13,20 +14,23 @@ import Info from "./components/Info";
 import Hobbies from "./components/Hobbies";
 import Experience from "./components/Experience";
 import Software from "./components/Software";
-import CustomCursor from "./components/CustomCursor";
+import BasicCursor from "./components/BasicCursor";
 import Impressum from "./components/Impressum";
 import Bwell from "./components/Bwell";
 import Fluencypunch from "./components/GenLang";
 import KnockoutArena from "./components/KnockoutArena";
 import Training from "./components/Training";
+import OrangeTraining from "./components/OrangeTraining";
+import Pricing from "./components/Pricing";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <CustomCursor />
+        <BasicCursor />
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/knockout-main" element={<FramerLanding />} />
           <Route path="/info" element={<Info />} />
           <Route path="/hobbies" element={<Hobbies />} />
           <Route path="/experience" element={<Experience />} />
@@ -34,7 +38,9 @@ function App() {
           <Route path="/bwell" element={<Bwell />} />
           <Route path="/fluencypunch" element={<Fluencypunch />} />
           <Route path="/training" element={<Training />} />
+          <Route path="/orange-training" element={<OrangeTraining />} />
           <Route path="/knockout-arena" element={<KnockoutArena />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/genlang" element={<Fluencypunch />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route

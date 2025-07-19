@@ -3,13 +3,20 @@
 @tailwind utilities;
 
 body {
+  font-family: 'Nunito', sans-serif;
+  background: #f7fafc; /* Optional: a very light, soothing background */
+  color: #222;         /* Softer than pure black */
+}
+
+.framer-style-heading {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 4rem; /* Adjust as needed */
+  line-height: 1.1;
+  color: #222;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  @apply bg-white text-neutral-900;
+  padding: 0;
+  text-align: center;
 }
 
 code {
@@ -19,4 +26,22 @@ code {
 
 .main-dark-bg {
   @apply bg-white text-neutral-900;
+}
+
+/* Custom background for Framer-style landing */
+.framer-bg {
+  background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
