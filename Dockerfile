@@ -29,6 +29,7 @@ WORKDIR /app
 
 # Copy built application from build stage
 COPY --from=build /app/build ./build
+COPY --from=build /app/build/index.html ./index.html
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
@@ -48,4 +49,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
 
 # Start the application
-CMD ["serve", "-s", "build", "-l", "3000", "--single"]
+CMD ["serve", "-s", "build", "-l", "3000", "--single", "--cors"]
