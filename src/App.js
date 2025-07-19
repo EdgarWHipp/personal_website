@@ -20,7 +20,6 @@ import Bwell from "./components/Bwell";
 import Fluencypunch from "./components/GenLang";
 import KnockoutArena from "./components/KnockoutArena";
 import Training from "./components/Training";
-import OrangeTraining from "./components/OrangeTraining";
 import Pricing from "./components/Pricing";
 
 function App() {
@@ -38,7 +37,7 @@ function App() {
           <Route path="/bwell" element={<Bwell />} />
           <Route path="/fluencypunch" element={<Fluencypunch />} />
           <Route path="/training" element={<Training />} />
-          <Route path="/orange-training" element={<OrangeTraining />} />
+          <Route path="/orange-training" element={<Training />} />
           <Route path="/knockout-arena" element={<KnockoutArena />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/genlang" element={<Fluencypunch />} />

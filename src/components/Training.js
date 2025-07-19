@@ -5,6 +5,12 @@ import configManager from '../utils/configManager';
 import { supabase, authService, lessonArchiveService } from '../utils/supabaseClient';
 import AuthModal from './AuthModal';
 
+function removePinyinBrackets(text) {
+  // Removes anything in brackets that looks like pinyin (letters, numbers, spaces, tone marks)
+  return text.replace(/（[a-zA-Z0-9\sāáǎàōóǒòēéěèīíǐìūúǔùüǘǚǜńň]+）/g, '')
+             .replace(/\([a-zA-Z0-9\sāáǎàōóǒòēéěèīíǐìūúǔùüǘǚǜńň]+\)/g, '');
+}
+
 export default function Training() {
   const navigate = useNavigate();
 
@@ -597,18 +603,22 @@ export default function Training() {
         throw new Error(`Lesson validation failed: ${validation.errors.join(', ')}`);
       }
 
-      setLessonText(lessonContent);
+      let processedLessonContent = lessonContent;
+      if (selectedLanguage === 'chinese') {
+        processedLessonContent = removePinyinBrackets(lessonContent);
+      }
+      setLessonText(processedLessonContent);
 
       // Generate audio
       let audioBlob;
       
       try {
-        audioBlob = await generateMultiSpeakerAudio(lessonContent);
+        audioBlob = await generateMultiSpeakerAudio(processedLessonContent);
       } catch (multiSpeakerError) {
         // Multi-speaker audio failed, trying fallback
         
         // Fallback: generate entire lesson as single audio
-        audioBlob = await generateElevenLabsAudio(lessonContent, 'JBFqnCBsd6RMkjVDRZzb');
+        audioBlob = await generateElevenLabsAudio(processedLessonContent, 'JBFqnCBsd6RMkjVDRZzb');
       }
       
       if (audioBlob) {
@@ -751,14 +761,19 @@ export default function Training() {
   };
 
   const getDifficultyAdjustedPrompt = (language, difficultyLevel) => {
-    const basePrompt = `Create an interactive language lesson for a cafe conversation in ${language === 'chinese' ? 'Mandarin Chinese' : 'French'}.
+    const isChinese = language === 'chinese';
+    const basePrompt = `Create an interactive language lesson for a cafe conversation in ${isChinese ? 'Traditional Mandarin Chinese' : 'French'}.
 
 IMPORTANT FORMAT: Use exactly "Speaker 1:" and "Speaker 2:" labels.
 
 Speaker 1 = English instructor giving clear instructions
-Speaker 2 = Native ${language === 'chinese' ? 'Chinese' : 'French'} speaker demonstrating pronunciation
+Speaker 2 = Native ${isChinese ? 'Chinese' : 'French'} speaker demonstrating pronunciation
 
-CRITICAL RULE: Whenever Speaker 1 mentions any ${language === 'chinese' ? 'Chinese' : 'French'} words or phrases, Speaker 2 must immediately follow with the same words/phrases in proper pronunciation.
+CRITICAL RULES for Chinese:
+- All Chinese output must use TRADITIONAL Chinese characters only.
+- DO NOT include any pinyin, romanization, or pronunciation guides in brackets or elsewhere.
+- Do NOT include any Latin letters in the Chinese output.
+- Only output the Chinese phrase or sentence, no pinyin or pronunciation hints.
 
 The lesson should teach practical cafe phrases using effective learning techniques:
 - Clear instruction and demonstration
@@ -886,7 +901,7 @@ Begin the lesson now:`;
 
       {/* Back button */}
       <button
-        onClick={() => navigate('/fluencypunch')}
+        onClick={() => navigate('/knockout-main')}
         className="absolute left-8 top-8 text-white/70 hover:text-white transition-colors z-20 flex items-center gap-2"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
