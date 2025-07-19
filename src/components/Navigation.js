@@ -1,84 +1,118 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { supabase, authService } from '../utils/supabaseClient';
+import AuthModal from './AuthModal';
 
 const Navigation = () => {
   const location = useLocation();
-  const [dark, setDark] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
+  // Check authentication on component mount
   useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    checkAuth();
+    
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          setUser(session.user);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => subscription?.unsubscribe();
+  }, []);
+
+  const checkAuth = async () => {
+    const { user } = await authService.getUser();
+    setUser(user);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await authService.signOut();
+      setUser(null);
+    } catch (error) {
+      console.error('Sign out error:', error);
     }
-  }, [dark]);
+  };
 
   const isActive = (path) => {
     return location.pathname === path;
   };
 
   return (
-    <nav className="bg-white shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <Link
-              to="/"
-              className="text-xl font-bold text-gray-800 hover:text-primary-600 transition-colors"
-            >
-              My Portfolio
-            </Link>
-          </div>
-          <div className="flex space-x-8 items-center">
-            <Link
-              to="/"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive("/")
-                  ? "text-primary-600 bg-primary-50"
-                  : "text-gray-600 hover:text-primary-600 hover:bg-gray-50"
-              }`}
-            >
-              CV
-            </Link>
-            <Link
-              to="/work"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive("/work")
-                  ? "text-primary-600 bg-primary-50"
-                  : "text-gray-600 hover:text-primary-600 hover:bg-gray-50"
-              }`}
-            >
-              Work
-            </Link>
-            <Link
-              to="/software"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive("/software")
-                  ? "text-primary-600 bg-primary-50"
-                  : "text-gray-600 hover:text-primary-600 hover:bg-gray-50"
-              }`}
-            >
-              Software
-            </Link>
-            <div className="ml-6 flex items-center">
-              <span className="mr-2 text-xs text-neutral-500 select-none">🌙</span>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={dark}
-                  onChange={() => setDark((d) => !d)}
-                  className="sr-only peer"
-                  aria-label="Toggle dark mode"
-                />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-500 dark:bg-gray-700 rounded-full peer dark:peer-checked:bg-primary-600 transition-all duration-300"></div>
-                <div className="absolute left-1 top-1 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 w-4 h-4 rounded-full transition-transform duration-300 peer-checked:translate-x-5"></div>
-              </label>
-              <span className="ml-2 text-xs text-neutral-500 select-none">☀️</span>
+    <>
+      <nav className="bg-white shadow-lg">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-8">
+              <Link
+                to="/bwell"
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive("/bwell")
+                    ? "text-green-600 bg-green-50"
+                    : "text-gray-600 hover:text-green-600 hover:bg-gray-50"
+                }`}
+              >
+                Bwell
+              </Link>
+              <Link
+                to="/genlang"
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive("/genlang")
+                    ? "text-green-600 bg-green-50"
+                    : "text-gray-600 hover:text-green-600 hover:bg-gray-50"
+                }`}
+              >
+                GenLang
+              </Link>
+            </div>
+            
+            <div className="flex items-center">
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <img 
+                    src={user.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.user_metadata?.full_name || user.email)}&background=16a34a&color=fff`}
+                    alt="Profile" 
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="text-sm text-gray-700">
+                    {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                  </span>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm text-gray-500 hover:text-gray-700 underline"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Authentication Modal */}
+      <AuthModal 
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => {
+          console.log('✅ Authentication successful');
+          checkAuth();
+        }}
+      />
+    </>
   );
 };
 

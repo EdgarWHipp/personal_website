@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
 import Landing from "./components/Landing";
 import CV from "./components/CV";
 import Work from "./components/Work";
@@ -15,35 +16,45 @@ import Software from "./components/Software";
 import CustomCursor from "./components/CustomCursor";
 import Impressum from "./components/Impressum";
 import Bwell from "./components/Bwell";
+import Fluencypunch from "./components/GenLang";
+import KnockoutArena from "./components/KnockoutArena";
+import Training from "./components/Training";
 
 function App() {
   return (
-    <Router>
-      <CustomCursor />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/info" element={<Info />} />
-        <Route path="/hobbies" element={<Hobbies />} />
-        <Route path="/experience" element={<Experience />} />
-        <Route path="/software" element={<Software />} />
-        <Route path="/bwell" element={<Bwell />} />
-        <Route path="/impressum" element={<Impressum />} />
-        <Route
-          path="/*"
-          element={
-            <div className="min-h-screen bg-white">
-              <main className="container mx-auto px-4 py-8">
-                <Routes>
-                  <Route path="cv" element={<CV />} />
-                  <Route path="work" element={<Work />} />
-                  <Route path="*" element={<Navigate to="/cv" />} />
-                </Routes>
-              </main>
-            </div>
-          }
-        />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <CustomCursor />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/hobbies" element={<Hobbies />} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/software" element={<Software />} />
+          <Route path="/bwell" element={<Bwell />} />
+          <Route path="/fluencypunch" element={<Fluencypunch />} />
+          <Route path="/training" element={<Training />} />
+          <Route path="/knockout-arena" element={<KnockoutArena />} />
+          <Route path="/genlang" element={<Fluencypunch />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route
+            path="/*"
+            element={
+              <div className="min-h-screen bg-white">
+                <main className="container mx-auto px-4 py-8">
+                  <Routes>
+                    <Route path="cv" element={<CV />} />
+                    <Route path="work" element={<Work />} />
+                    <Route path="cv/bwell" element={<Bwell />} />
+                    <Route path="*" element={<Navigate to="/cv" />} />
+                  </Routes>
+                </main>
+              </div>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
