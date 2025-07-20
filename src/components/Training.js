@@ -17,7 +17,6 @@ export default function Training() {
   // Check authentication on component mount
   useEffect(() => {
     checkAuth();
-    loadUserProgress();
     
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -114,6 +113,22 @@ export default function Training() {
     chinese: []
   });
   const audioRef = useRef(null);
+  const [streaks, setStreaks] = useState({ french: 0, chinese: 0 });
+  const [lastCompleted, setLastCompleted] = useState({ french: null, chinese: null });
+
+  // Load streaks from localStorage on mount
+  useEffect(() => {
+    const streakData = localStorage.getItem('fluencypunch_streaks');
+    const lastCompletedData = localStorage.getItem('fluencypunch_lastCompleted');
+    if (streakData) setStreaks(JSON.parse(streakData));
+    if (lastCompletedData) setLastCompleted(JSON.parse(lastCompletedData));
+  }, []);
+
+  // Save streaks to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem('fluencypunch_streaks', JSON.stringify(streaks));
+    localStorage.setItem('fluencypunch_lastCompleted', JSON.stringify(lastCompleted));
+  }, [streaks, lastCompleted]);
 
   // Get AI configuration
   const aiConfig = configManager.getAIConfig();
@@ -737,29 +752,38 @@ export default function Training() {
   };
 
   // Mark lesson as completed and increase difficulty
-  const completeLessonWithUnderstanding = () => {
-    if (!selectedLanguage || !lessonText) return;
-    
+  const completeLessonWithUnderstanding = async () => {
+    if (!selectedLanguage || !lessonText || !user) return;
     const currentProgress = { ...userProgress };
     const langProgress = currentProgress[selectedLanguage];
     const currentDifficultyLevel = langProgress.difficultyLevel || 1;
-    
-    // Save current lesson to history
-    saveLessonToHistory(selectedLanguage, lessonText, currentDifficultyLevel);
-    
-    // Increment completed lessons
-    langProgress.completedLessons += 1;
-    
-    // Increase difficulty level every 5 completed lessons
-    if (langProgress.completedLessons % 5 === 0) {
-      langProgress.difficultyLevel = Math.min(langProgress.difficultyLevel + 1, 10); // Max level 10
+    // Insert lesson into Supabase
+    const { error } = await supabase.from('archived_lessons').insert([
+      {
+        user_id: user.id,
+        language: selectedLanguage,
+        scenario: 'cafe',
+        lesson_script: lessonText,
+        comprehension_level: '80%+',
+        lesson_duration: '30s',
+        word_count: lessonText.split(' ').length,
+        difficulty_level: currentDifficultyLevel,
+      }
+    ]);
+    if (error) {
+      setError('Failed to save lesson to Supabase: ' + error.message);
+      return;
     }
-    
-    // Save progress
-    saveUserProgress(currentProgress);
+    // Refetch lessons to update progress, streaks, and previousLessons
+    fetchLessonsFromSupabase(user.id).then(lessons => {
+      const { progress, streaks, lastCompleted, previousLessons } = computeProgressAndStreaks(lessons);
+      setUserProgress(progress);
+      setStreaks(streaks);
+      setLastCompleted(lastCompleted);
+      setPreviousLessons(previousLessons);
     setLessonCompleted(true);
     setShowProgressModal(true);
-    
+    }).catch(console.error);
   };
 
   const getDifficultyAdjustedPrompt = (language, difficultyLevel) => {
@@ -883,6 +907,76 @@ START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
     setIsPlaying(false);
   };
 
+  // Remove all localStorage usage for streaks, progress, and lessons.
+  // Add Supabase-based session management:
+
+  // Helper to fetch all lessons for the user from Supabase
+  const fetchLessonsFromSupabase = async (userId) => {
+    const { data, error } = await supabase
+      .from('archived_lessons')
+      .select('*')
+      .eq('user_id', userId)
+      .order('archived_at', { ascending: false });
+    if (error) throw error;
+    return data;
+  };
+
+  // Helper to compute progress and streaks from lessons
+  const computeProgressAndStreaks = (lessons) => {
+    const progress = { french: { completedLessons: 0, difficultyLevel: 1 }, chinese: { completedLessons: 0, difficultyLevel: 1 } };
+    const streaks = { french: 0, chinese: 0 };
+    const lastCompleted = { french: null, chinese: null };
+    const previousLessons = { french: [], chinese: [] };
+    const today = new Date().toISOString().slice(0, 10);
+    ['french', 'chinese'].forEach((lang) => {
+      const langLessons = lessons.filter(l => l.language === lang);
+      progress[lang].completedLessons = langLessons.length;
+      progress[lang].difficultyLevel = langLessons.length > 0 ? Math.max(...langLessons.map(l => l.difficulty_level || 1)) : 1;
+      previousLessons[lang] = langLessons.map(l => ({
+        id: l.id,
+        content: l.lesson_script,
+        difficulty: l.difficulty_level || 1,
+        timestamp: l.archived_at,
+        date: new Date(l.archived_at).toLocaleDateString(),
+        source: 'database',
+      }));
+      // Streak calculation
+      let streak = 0;
+      let lastDate = null;
+      for (const lesson of langLessons) {
+        const lessonDate = lesson.archived_at.slice(0, 10);
+        if (!lastDate) {
+          lastDate = lessonDate;
+          streak = lessonDate === today ? 1 : 0;
+        } else {
+          const diff = (new Date(lastDate) - new Date(lessonDate)) / (1000 * 60 * 60 * 24);
+          if (diff === 1) {
+            streak += 1;
+            lastDate = lessonDate;
+          } else {
+            break;
+          }
+        }
+      }
+      streaks[lang] = streak;
+      lastCompleted[lang] = lastDate;
+    });
+    return { progress, streaks, lastCompleted, previousLessons };
+  };
+
+  // On mount, fetch lessons and set state
+  useEffect(() => {
+    if (user) {
+      fetchLessonsFromSupabase(user.id).then(lessons => {
+        const { progress, streaks, lastCompleted, previousLessons } = computeProgressAndStreaks(lessons);
+        setUserProgress(progress);
+        setStreaks(streaks);
+        setLastCompleted(lastCompleted);
+        setPreviousLessons(previousLessons);
+      }).catch(console.error);
+    }
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-900 to-teal-900 relative overflow-hidden">
       {/* Ocean Wave Background */}
@@ -966,6 +1060,7 @@ START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
                   ></div>
                 </div>
               </div>
+              <div className="mb-2 text-sm text-white/80">Streak: {streaks['french']} days</div>
               
               {isGenerating && selectedLanguage === 'french' && (
                 <div className="absolute inset-0 bg-blue-500/20 backdrop-blur-sm rounded-3xl flex items-center justify-center">
@@ -1018,6 +1113,7 @@ START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
                   ></div>
                 </div>
               </div>
+              <div className="mb-2 text-sm text-white/80">Streak: {streaks['chinese']} days</div>
               
               {isGenerating && selectedLanguage === 'chinese' && (
                 <div className="absolute inset-0 bg-teal-500/20 backdrop-blur-sm rounded-3xl flex items-center justify-center">

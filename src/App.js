@@ -17,7 +17,6 @@ import Software from "./components/Software";
 import BasicCursor from "./components/BasicCursor";
 import Impressum from "./components/Impressum";
 import Bwell from "./components/Bwell";
-import Fluencypunch from "./components/GenLang";
 import KnockoutArena from "./components/KnockoutArena";
 import Training from "./components/Training";
 import Pricing from "./components/Pricing";
@@ -35,11 +34,8 @@ function App() {
           <Route path="/experience" element={<Experience />} />
           <Route path="/software" element={<Software />} />
           <Route path="/bwell" element={<Bwell />} />
-          <Route path="/fluencypunch" element={<Fluencypunch />} />
-          <Route path="/training" element={<Training />} />
           <Route path="/knockout-arena" element={<KnockoutArena />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/genlang" element={<Fluencypunch />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route
             path="/*"
