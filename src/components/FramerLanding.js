@@ -57,7 +57,7 @@ export default function FramerLanding() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/orange-training`
+          redirectTo: `${window.location.origin}/knockout-main`
         }
       });
       if (error) throw error;
