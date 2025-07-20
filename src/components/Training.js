@@ -558,12 +558,8 @@ export default function Training() {
   };
 
   // Generate complete cafe lesson
-  const generateCafeLesson = async () => {
-    if (!selectedLanguage) {
-      setError('Please select a language first');
-      return;
-    }
-
+  const generateCafeLesson = async (lang) => {
+    const languageToUse = lang || selectedLanguage;
     if (!aiConfig.enabled || !aiConfig.apiKey) {
       setError('Please configure your KIMI K2 API in Bwell settings first');
       return;
@@ -576,11 +572,17 @@ export default function Training() {
     resetLessonState();
 
     try {
-      const currentDifficultyLevel = userProgress[selectedLanguage]?.difficultyLevel || 1;
-      const completedLessons = userProgress[selectedLanguage]?.completedLessons || 0;
+      const currentDifficultyLevel = userProgress[languageToUse]?.difficultyLevel || 1;
+      const completedLessons = userProgress[languageToUse]?.completedLessons || 0;
       
       
-      const prompt = getDifficultyAdjustedPrompt(selectedLanguage, currentDifficultyLevel);
+      const prompt = getDifficultyAdjustedPrompt(languageToUse, currentDifficultyLevel);
+      console.log('DEBUG: Language selected:', languageToUse);
+      console.log('DEBUG: Full prompt:', prompt);
+      console.log('=== DEBUG PROMPT ===');
+      console.log('Selected Language:', languageToUse);
+      console.log('Is Chinese:', languageToUse === 'chinese');
+      console.log('Prompt:', prompt.substring(0, 200) + '...');
 
       const api = new KimiTherapyAPI(aiConfig.apiKey, aiConfig.apiUrl);
       
@@ -604,7 +606,7 @@ export default function Training() {
       }
 
       let processedLessonContent = lessonContent;
-      if (selectedLanguage === 'chinese') {
+      if (languageToUse === 'chinese') {
         processedLessonContent = removePinyinBrackets(lessonContent);
       }
       setLessonText(processedLessonContent);
@@ -627,7 +629,7 @@ export default function Training() {
         
         // Validate final audio
         const segments = parseLessonBySpeakers(lessonContent);
-        const audioValidation = await validateFinalAudio(audioBlob, segments, selectedLanguage);
+        const audioValidation = await validateFinalAudio(audioBlob, segments, languageToUse);
         if (!audioValidation.isValid) {
           console.warn('⚠️ Audio validation warnings:', audioValidation.warnings);
         }
@@ -762,84 +764,77 @@ export default function Training() {
 
   const getDifficultyAdjustedPrompt = (language, difficultyLevel) => {
     const isChinese = language === 'chinese';
-    const basePrompt = `Create an interactive language lesson for a cafe conversation in ${isChinese ? 'Traditional Mandarin Chinese' : 'French'}.
+    const basePrompt = `CREATE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON ONLY - NO OTHER LANGUAGES ALLOWED
 
-IMPORTANT FORMAT: Use exactly "Speaker 1:" and "Speaker 2:" labels.
+Create a ${isChinese ? 'MANDARIN CHINESE' : 'FRENCH'} cafe conversation lesson at difficulty level ${difficultyLevel}/10.
 
-Speaker 1 = English instructor giving clear instructions
-Speaker 2 = Native ${isChinese ? 'Chinese' : 'French'} speaker demonstrating pronunciation
+STRICT FORMAT:
+- Speaker 1: English instructor (always in English)
+- Speaker 2: ${isChinese ? 'CHINESE NATIVE SPEAKER' : 'FRENCH NATIVE SPEAKER'} (always in ${isChinese ? 'Traditional Chinese' : 'French'})
 
-CRITICAL RULES for Chinese:
-- All Chinese output must use TRADITIONAL Chinese characters only.
-- DO NOT include any pinyin, romanization, or pronunciation guides in brackets or elsewhere.
-- Do NOT include any Latin letters in the Chinese output.
-- Only output the Chinese phrase or sentence, no pinyin or pronunciation hints.
 
-The lesson should teach practical cafe phrases using effective learning techniques:
-- Clear instruction and demonstration
-- Practice exercises with pauses
-- Progressive skill building
-- Natural conversation flow
-- Native speaker pronunciation after every foreign word/phrase mentioned
-
-Difficulty Level ${difficultyLevel}/10:`;
+LEARNING STRUCTURE:
+- Progressive vocabulary building
+- Practical cafe scenarios
+- Clear instruction followed by native pronunciation
+- Difficulty level ${difficultyLevel}/10 content`;
 
     const difficultyPrompts = {
-      1: `BEGINNER (Level 1): Basic greetings and simple requests
+      1: `${isChinese ? 'BEGINNER CHINESE' : 'BEGINNER FRENCH'} (Level 1): Basic greetings and simple requests
 - "Hello", "Please", "Thank you"
-- "I want coffee"
+- "I want ${isChinese ? '茶' : 'coffee'}"
 - "How much?"
 - Very simple, 2-3 word phrases only`,
 
-      2: `BEGINNER+ (Level 2): Simple cafe orders
-- Coffee types (coffee, tea, water)
+      2: `${isChinese ? 'BEGINNER+ CHINESE' : 'BEGINNER+ FRENCH'} (Level 2): Simple cafe orders
+- ${isChinese ? '茶類' : 'Coffee types'} (coffee, tea, water)
 - Basic politeness ("excuse me", "please")
 - Simple questions ("where is?")
 - 3-4 word phrases`,
 
-      3: `ELEMENTARY (Level 3): Extended cafe interaction
+      3: `${isChinese ? 'ELEMENTARY CHINESE' : 'ELEMENTARY FRENCH'} (Level 3): Extended cafe interaction
 - Ordering specific items with details
 - Asking for recommendations
 - Basic conversation starters
 - 4-5 word phrases`,
 
-      4: `ELEMENTARY+ (Level 4): Cafe preferences
+      4: `${isChinese ? 'ELEMENTARY+ CHINESE' : 'ELEMENTARY+ FRENCH'} (Level 4): Cafe preferences
 - Expressing likes/dislikes
 - Asking about ingredients
 - Making special requests
 - Simple past/future tense`,
 
-      5: `INTERMEDIATE (Level 5): Complex cafe orders
+      5: `${isChinese ? 'INTERMEDIATE CHINESE' : 'INTERMEDIATE FRENCH'} (Level 5): Complex cafe orders
 - Describing preferences in detail
 - Discussing food allergies
 - Making complaints or compliments
 - Multiple sentence structures`,
 
-      6: `INTERMEDIATE+ (Level 6): Cafe conversation
+      6: `${isChinese ? 'INTERMEDIATE+ CHINESE' : 'INTERMEDIATE+ FRENCH'} (Level 6): Cafe conversation
 - Casual conversation with staff
 - Discussing daily routine
 - Making plans while at cafe
 - Conditional statements`,
 
-      7: `UPPER-INTERMEDIATE (Level 7): Social cafe interactions
+      7: `${isChinese ? 'UPPER-INTERMEDIATE CHINESE' : 'UPPER-INTERMEDIATE FRENCH'} (Level 7): Social cafe interactions
 - Meeting friends at cafe
 - Discussing work/studies
 - Expressing opinions about food
 - Complex grammar structures`,
 
-      8: `UPPER-INTERMEDIATE+ (Level 8): Cultural cafe discussions
+      8: `${isChinese ? 'UPPER-INTERMEDIATE+ CHINESE' : 'UPPER-INTERMEDIATE+ FRENCH'} (Level 8): Cultural cafe discussions
 - Talking about local customs
 - Discussing current events
 - Debating food culture
 - Advanced vocabulary`,
 
-      9: `ADVANCED (Level 9): Professional cafe meetings
+      9: `${isChinese ? 'ADVANCED CHINESE' : 'ADVANCED FRENCH'} (Level 9): Professional cafe meetings
 - Business discussions
 - Formal/informal register switching
 - Complex negotiations
 - Sophisticated expressions`,
 
-      10: `NATIVE-LEVEL (Level 10): Expert cafe fluency
+      10: `${isChinese ? 'NATIVE-LEVEL CHINESE' : 'NATIVE-LEVEL FRENCH'} (Level 10): Expert cafe fluency
 - Idiomatic expressions
 - Cultural references
 - Humor and wordplay
@@ -850,21 +845,24 @@ Difficulty Level ${difficultyLevel}/10:`;
 
 ${difficultyPrompts[difficultyLevel] || difficultyPrompts[1]}
 
-Create natural, engaging exchanges that build confidence. Use clear English instructions and authentic ${language === 'chinese' ? 'Chinese' : 'French'}.
+CREATE ONLY ${isChinese ? 'CHINESE' : 'FRENCH'} CONTENT:
+- Use ${isChinese ? 'Traditional Chinese characters' : 'authentic French'} throughout
+- ${isChinese ? 'Chinese examples: 茶, 咖啡, 你好, 謝謝, 我想要一杯咖啡' : 'French examples: café, thé, bonjour, merci, je voudrais un café'}
+- ${isChinese ? 'Zero French language or culture references' : 'Zero Chinese language or culture references'}
 
-EXAMPLE PATTERN:
-Speaker 1: Let's learn how to say "coffee" in ${language === 'chinese' ? 'Chinese' : 'French'}.
-Speaker 2: coffee (pronounced in ${language === 'chinese' ? 'Chinese' : 'French'})
-Speaker 1: Great! Now try ordering: "I would like one coffee, please."
-Speaker 2: [Full phrase in ${language === 'chinese' ? 'Chinese' : 'French'}]
+EXAMPLE PATTERN for ${isChinese ? 'CHINESE' : 'FRENCH'}:
+Speaker 1: Let's learn how to say "${isChinese ? 'tea' : 'coffee'}" in ${isChinese ? 'Chinese' : 'French'}.
+Speaker 2: ${isChinese ? '茶' : 'café'}
+Speaker 1: Great! Now try ordering: "I would like one ${isChinese ? 'tea' : 'coffee'}, please."
+Speaker 2: ${isChinese ? '我想要一杯茶' : 'Je voudrais un café, s\'il vous plaît.'}
 
-Generate EXACTLY 10 exchanges (20 total lines) at difficulty level ${difficultyLevel} following this pattern.
+Generate EXACTLY 10 exchanges (20 total lines) focusing SOLELY on ${isChinese ? 'CHINESE' : 'FRENCH'} at difficulty level ${difficultyLevel}.
 
 END THE LESSON WITH:
-Speaker 1: Excellent work! You've completed today's ${language === 'chinese' ? 'Chinese' : 'French'} cafe lesson. Practice these phrases before your next visit to a cafe.
-Speaker 2: [Encouraging phrase in ${language === 'chinese' ? 'Chinese' : 'French'} meaning "Well done!" or "Good job!"]
+Speaker 1: Excellent work! You've completed today's ${isChinese ? 'CHINESE' : 'FRENCH'} cafe lesson. Practice these ${isChinese ? 'Chinese' : 'French'} phrases.
+Speaker 2: ${isChinese ? '做得好！' : 'Bien joué!'}
 
-Begin the lesson now:`;
+START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
   };
 
   // Handle audio play/pause
@@ -947,7 +945,7 @@ Begin the lesson now:`;
           <div 
             onClick={() => {
               setSelectedLanguage('french');
-              generateCafeLesson();
+              generateCafeLesson('french');
             }}
             className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-xl border border-blue-500/30 rounded-3xl p-8 hover:scale-105 transition-all duration-300 cursor-pointer group relative"
           >
@@ -999,7 +997,7 @@ Begin the lesson now:`;
           <div 
             onClick={() => {
               setSelectedLanguage('chinese');
-              generateCafeLesson();
+              generateCafeLesson('chinese');
             }}
             className="bg-gradient-to-br from-teal-500/20 to-cyan-500/20 backdrop-blur-xl border border-teal-500/30 rounded-3xl p-8 hover:scale-105 transition-all duration-300 cursor-pointer group relative"
           >
@@ -1243,8 +1241,8 @@ Begin the lesson now:`;
                         </div>
                       </div>
                       
-                      <div className="bg-black/20 rounded-lg p-4 max-h-60 overflow-y-auto">
-                        <pre className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed font-mono">
+                      <div className="bg-black/20 rounded-lg p-4 max-h-96 overflow-y-auto">
+                        <pre className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed font-mono max-h-96 overflow-y-auto">
                           {lesson.content}
                         </pre>
                       </div>

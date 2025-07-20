@@ -166,7 +166,7 @@ export default function FramerLanding() {
 
           <div className="flex justify-center items-center">
             <button
-              onClick={() => navigate('/orange-training')}
+              onClick={() => navigate('/training')}
               className="bg-white text-orange-600 hover:bg-gray-100 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Start Learning
@@ -193,7 +193,7 @@ export default function FramerLanding() {
           </p>
           <div className="flex justify-center">
             <button
-              onClick={() => navigate('/orange-training')}
+              onClick={() => navigate('/training')}
               className="bg-white text-orange-600 hover:bg-gray-100 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Start Learning

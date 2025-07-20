@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './KnockoutArena.css'; // Import the CSS file
 // Import your Stripe checkout function
 import startStripeCheckout from '../services/kimiAPI'; // Adjust path if needed
@@ -10,6 +11,7 @@ const PRICING_TIERS = [
 ];
 
 const KnockoutArena = () => {
+  const navigate = useNavigate();
   // Handler for Stripe checkout
   const handleCheckout = (amount) => {
     // Call your existing Stripe checkout logic
@@ -43,14 +45,15 @@ const KnockoutArena = () => {
         ))}
       </div>
 
-      {/* REMOVE the following block if it exists at the bottom: */}
-      {/*
-      <div className="cta-section">
-        <h1>Start Your Language Journey Today</h1>
-        <p>Join thousands of learners who are already mastering new languages with AI-powered training.</p>
-        <button>Start Learning</button>
+      {/* Start Learning Button at the bottom */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+        <button
+          onClick={() => navigate('/training')}
+          className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          Start Learning
+        </button>
       </div>
-      */}
     </div>
   );
 };

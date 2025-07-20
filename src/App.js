@@ -37,7 +37,6 @@ function App() {
           <Route path="/bwell" element={<Bwell />} />
           <Route path="/fluencypunch" element={<Fluencypunch />} />
           <Route path="/training" element={<Training />} />
-          <Route path="/orange-training" element={<Training />} />
           <Route path="/knockout-arena" element={<KnockoutArena />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/genlang" element={<Fluencypunch />} />
