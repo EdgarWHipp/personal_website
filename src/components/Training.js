@@ -115,6 +115,8 @@ export default function Training() {
   const audioRef = useRef(null);
   const [streaks, setStreaks] = useState({ french: 0, chinese: 0 });
   const [lastCompleted, setLastCompleted] = useState({ french: null, chinese: null });
+  // Add a ref to track the latest request
+  const latestRequestId = useRef(0);
 
   // Load streaks from localStorage on mount
   useEffect(() => {
@@ -483,14 +485,15 @@ export default function Training() {
       for (let i = 0; i < segments.length; i++) {
         const segment = segments[i];
         const nextSegment = segments[i + 1];
-        
-        // Select voice based on speaker
-        const voiceId = segment.isNarrator 
-          ? 'JBFqnCBsd6RMkjVDRZzb' // George - Distinguished British academic gentleman
-          : selectedLanguage === 'chinese' 
-            ? 'Xb7hH8MSUJpSbSDYk0k2' // Alice - Chinese voice
-            : 'XB0fDUnXU5powFXDhCwa'; // Charlotte - Authentic French lady
-        
+        // Always use British English for the tutor (narrator)
+        let voiceId;
+        if (segment.isNarrator) {
+          voiceId = 'JBFqnCBsd6RMkjVDRZzb'; // British English tutor
+        } else {
+          voiceId = selectedLanguage === 'chinese'
+            ? 'Xb7hH8MSUJpSbSDYk0k2' // Chinese native speaker
+            : 'XB0fDUnXU5powFXDhCwa'; // French native speaker
+        }
         try {
           const audioBlob = await generateElevenLabsAudio(segment.text, voiceId);
           audioBlobs.push(audioBlob);
@@ -586,73 +589,58 @@ export default function Training() {
     setLessonText('');
     resetLessonState();
 
+    // Increment request id
+    const requestId = ++latestRequestId.current;
+
     try {
       const currentDifficultyLevel = userProgress[languageToUse]?.difficultyLevel || 1;
       const completedLessons = userProgress[languageToUse]?.completedLessons || 0;
-      
-      
       const prompt = getDifficultyAdjustedPrompt(languageToUse, currentDifficultyLevel);
-      console.log('DEBUG: Language selected:', languageToUse);
-      console.log('DEBUG: Full prompt:', prompt);
-      console.log('=== DEBUG PROMPT ===');
-      console.log('Selected Language:', languageToUse);
-      console.log('Is Chinese:', languageToUse === 'chinese');
-      console.log('Prompt:', prompt.substring(0, 200) + '...');
-
       const api = new KimiTherapyAPI(aiConfig.apiKey, aiConfig.apiUrl);
-      
       const response = await api.generateLanguageLesson(prompt, 0.7, 500);
-      
+      // Ignore outdated requests
+      if (requestId !== latestRequestId.current) return;
       if (!response?.success) {
         throw new Error(response?.error || 'KIMI K2 API call failed');
       }
-      
       if (!response?.message) {
         throw new Error('No lesson content received from KIMI K2 API');
       }
-
       const lessonContent = response.message.trim();
-      
-      
-      // Validate lesson content
       const validation = validateLessonText(lessonContent);
       if (!validation.isValid) {
         throw new Error(`Lesson validation failed: ${validation.errors.join(', ')}`);
       }
-
       let processedLessonContent = lessonContent;
       if (languageToUse === 'chinese') {
         processedLessonContent = removePinyinBrackets(lessonContent);
       }
       setLessonText(processedLessonContent);
-
       // Generate audio
       let audioBlob;
-      
       try {
         audioBlob = await generateMultiSpeakerAudio(processedLessonContent);
       } catch (multiSpeakerError) {
-        // Multi-speaker audio failed, trying fallback
-        
-        // Fallback: generate entire lesson as single audio
         audioBlob = await generateElevenLabsAudio(processedLessonContent, 'JBFqnCBsd6RMkjVDRZzb');
       }
-      
+      // Ignore outdated requests
+      if (requestId !== latestRequestId.current) return;
       if (audioBlob) {
         const audioUrl = URL.createObjectURL(audioBlob);
         setAudioUrl(audioUrl);
-        
-        // Validate final audio
         const segments = parseLessonBySpeakers(lessonContent);
         const audioValidation = await validateFinalAudio(audioBlob, segments, languageToUse);
         if (!audioValidation.isValid) {
           console.warn('⚠️ Audio validation warnings:', audioValidation.warnings);
         }
-        
       }
     } catch (error) {
+      // Ignore outdated requests
+      if (requestId !== latestRequestId.current) return;
       setError(`Error generating lesson: ${error.message}`);
     }
+    // Ignore outdated requests
+    if (requestId !== latestRequestId.current) return;
     setIsGenerating(false);
   };
 
@@ -794,7 +782,7 @@ Create a ${isChinese ? 'MANDARIN CHINESE' : 'FRENCH'} cafe conversation lesson a
 
 STRICT FORMAT:
 - Speaker 1: English instructor (always in English)
-- Speaker 2: ${isChinese ? 'CHINESE NATIVE SPEAKER' : 'FRENCH NATIVE SPEAKER'} (always in ${isChinese ? 'Traditional Chinese' : 'French'})
+- Speaker 2: ${isChinese ? 'CHINESE NATIVE SPEAKER' : 'FRENCH NATIVE SPEAKER'} 
 
 
 LEARNING STRUCTURE:
