@@ -155,7 +155,7 @@ Would you like me to help you think through some immediate safety steps while yo
   }
 
   // Simple language learning API call (bypasses therapy configuration)
-  async generateLanguageLesson(prompt, temperature = 0.7, maxTokens = 500) {
+  async generateLanguageLesson(prompt, temperature = 0.7, maxTokens = 500, signal = null) {
     try {
 
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
@@ -172,7 +172,8 @@ Would you like me to help you think through some immediate safety steps while yo
           temperature: temperature,
           max_tokens: maxTokens,
           stream: false
-        })
+        }),
+        signal: signal
       });
 
 

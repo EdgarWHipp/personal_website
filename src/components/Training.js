@@ -241,6 +241,12 @@ export default function Training() {
       throw new Error('ElevenLabs API key not configured. Please set it in Bwell settings.');
     }
 
+    // Create timeout controller for ElevenLabs API
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, 30000); // 30 second timeout
+
     try {
       
       const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
@@ -259,8 +265,11 @@ export default function Training() {
             style: 0.2,
             use_speaker_boost: true
           }
-        })
+        }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -271,6 +280,10 @@ export default function Training() {
       return audioBlob;
       
     } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Audio generation timed out. Please try again.');
+      }
       console.error('❌ ElevenLabs API error:', error);
       throw error;
     }
@@ -479,19 +492,25 @@ export default function Training() {
         throw new Error('No speaker segments found in lesson text');
       }
       
+      // Create timeout for entire audio generation process
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 120000); // 2 minute timeout for full audio generation
+
       // Generate audio for each segment
       const audioBlobs = [];
       
-      for (let i = 0; i < segments.length; i++) {
+      for (let i = 0; i < segments.length && !controller.signal.aborted; i++) {
         const segment = segments[i];
         const nextSegment = segments[i + 1];
-        // Always use British English for the tutor (narrator)
+        // Use appropriate voice based on language and speaker type
         let voiceId;
         if (segment.isNarrator) {
-          voiceId = 'JBFqnCBsd6RMkjVDRZzb'; // British English tutor
+          voiceId = 'JBFqnCBsd6RMkjVDRZzb'; // English tutor voice (for instructions)
         } else {
           voiceId = selectedLanguage === 'chinese'
-            ? 'Xb7hH8MSUJpSbSDYk0k2' // Chinese native speaker
+            ? 'Xb7hH8MSUJpSbSDYk0k2' // Chinese native speaker (Mandarin)
             : 'XB0fDUnXU5powFXDhCwa'; // French native speaker
         }
         try {
@@ -519,12 +538,21 @@ export default function Training() {
         }
       }
       
+      clearTimeout(timeoutId);
+      
+      if (controller.signal.aborted) {
+        throw new Error('Audio generation timeout - process took too long');
+      }
+      
       // Concatenate all audio segments
       const finalAudio = await concatenateAudioSegments(audioBlobs, segments);
       return finalAudio;
       
     } catch (error) {
       console.error('❌ Multi-speaker audio generation failed:', error);
+      if (error.name === 'AbortError') {
+        throw new Error('Audio generation was cancelled due to timeout');
+      }
       throw error;
     }
   };
@@ -585,21 +613,36 @@ export default function Training() {
 
     setIsGenerating(true);
     setError('');
+    // Revoke previous audio URL to avoid caching
+    if (audioUrl) {
+      URL.revokeObjectURL(audioUrl);
+    }
     setAudioUrl('');
     setLessonText('');
+    setIsPlaying(false);
     resetLessonState();
 
     // Increment request id
     const requestId = ++latestRequestId.current;
+
+    // Create timeout controller for API request
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, 30000); // 30 second timeout
 
     try {
       const currentDifficultyLevel = userProgress[languageToUse]?.difficultyLevel || 1;
       const completedLessons = userProgress[languageToUse]?.completedLessons || 0;
       const prompt = getDifficultyAdjustedPrompt(languageToUse, currentDifficultyLevel);
       const api = new KimiTherapyAPI(aiConfig.apiKey, aiConfig.apiUrl);
-      const response = await api.generateLanguageLesson(prompt, 0.7, 500);
-      // Ignore outdated requests
+      
+      // Pass timeout signal to API call
+      const response = await api.generateLanguageLesson(prompt, 0.7, 500, controller.signal);
+      
+      clearTimeout(timeoutId);
       if (requestId !== latestRequestId.current) return;
+      
       if (!response?.success) {
         throw new Error(response?.error || 'KIMI K2 API call failed');
       }
@@ -623,11 +666,10 @@ export default function Training() {
       } catch (multiSpeakerError) {
         audioBlob = await generateElevenLabsAudio(processedLessonContent, 'JBFqnCBsd6RMkjVDRZzb');
       }
-      // Ignore outdated requests
       if (requestId !== latestRequestId.current) return;
       if (audioBlob) {
-        const audioUrl = URL.createObjectURL(audioBlob);
-        setAudioUrl(audioUrl);
+        const newAudioUrl = URL.createObjectURL(audioBlob);
+        setAudioUrl(newAudioUrl);
         const segments = parseLessonBySpeakers(lessonContent);
         const audioValidation = await validateFinalAudio(audioBlob, segments, languageToUse);
         if (!audioValidation.isValid) {
@@ -635,11 +677,15 @@ export default function Training() {
         }
       }
     } catch (error) {
-      // Ignore outdated requests
+      clearTimeout(timeoutId);
       if (requestId !== latestRequestId.current) return;
-      setError(`Error generating lesson: ${error.message}`);
+      
+      if (error.name === 'AbortError') {
+        setError('Request timed out. Please try again or check your connection.');
+      } else {
+        setError(`Error generating lesson: ${error.message}`);
+      }
     }
-    // Ignore outdated requests
     if (requestId !== latestRequestId.current) return;
     setIsGenerating(false);
   };
@@ -778,7 +824,7 @@ export default function Training() {
     const isChinese = language === 'chinese';
     const basePrompt = `CREATE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON ONLY - NO OTHER LANGUAGES ALLOWED
 
-Create a ${isChinese ? 'MANDARIN CHINESE' : 'FRENCH'} cafe conversation lesson at difficulty level ${difficultyLevel}/10.
+Create a ${isChinese ? 'MANDARIN CHINESE' : 'FRENCH'} interesting conversation lesson in a day to day situation at difficulty level ${difficultyLevel}/10.
 
 STRICT FORMAT:
 - Speaker 1: English instructor (always in English)
@@ -787,7 +833,6 @@ STRICT FORMAT:
 
 LEARNING STRUCTURE:
 - Progressive vocabulary building
-- Practical cafe scenarios
 - Clear instruction followed by native pronunciation
 - Difficulty level ${difficultyLevel}/10 content`;
 
@@ -857,21 +902,16 @@ LEARNING STRUCTURE:
 
 ${difficultyPrompts[difficultyLevel] || difficultyPrompts[1]}
 
-CREATE ONLY ${isChinese ? 'CHINESE' : 'FRENCH'} CONTENT:
-- Use ${isChinese ? 'Traditional Chinese characters' : 'authentic French'} throughout
-- ${isChinese ? 'Chinese examples: 茶, 咖啡, 你好, 謝謝, 我想要一杯咖啡' : 'French examples: café, thé, bonjour, merci, je voudrais un café'}
-- ${isChinese ? 'Zero French language or culture references' : 'Zero Chinese language or culture references'}
-
 EXAMPLE PATTERN for ${isChinese ? 'CHINESE' : 'FRENCH'}:
 Speaker 1: Let's learn how to say "${isChinese ? 'tea' : 'coffee'}" in ${isChinese ? 'Chinese' : 'French'}.
 Speaker 2: ${isChinese ? '茶' : 'café'}
-Speaker 1: Great! Now try ordering: "I would like one ${isChinese ? 'tea' : 'coffee'}, please."
+Speaker 1: Now try ordering: "I would like one ${isChinese ? 'tea' : 'coffee'}, please."
 Speaker 2: ${isChinese ? '我想要一杯茶' : 'Je voudrais un café, s\'il vous plaît.'}
 
-Generate EXACTLY 10 exchanges (20 total lines) focusing SOLELY on ${isChinese ? 'CHINESE' : 'FRENCH'} at difficulty level ${difficultyLevel}.
+Generate EXACTLY 10 exchanges (20 total lines) taking motivation from the pimsleur method.
 
 END THE LESSON WITH:
-Speaker 1: Excellent work! You've completed today's ${isChinese ? 'CHINESE' : 'FRENCH'} cafe lesson. Practice these ${isChinese ? 'Chinese' : 'French'} phrases.
+Speaker 1: You've completed today's ${isChinese ? 'CHINESE' : 'FRENCH'} cafe lesson. Practice these ${isChinese ? 'Chinese' : 'French'} phrases.
 Speaker 2: ${isChinese ? '做得好！' : 'Bien joué!'}
 
 START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
