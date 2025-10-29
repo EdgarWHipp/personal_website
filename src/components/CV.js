@@ -7,14 +7,6 @@ const sections = [
   { title: "Software", href: "/software" },
   { title: "Experience", href: "/experience" },
   { title: "Hobbies & Blog", href: "/hobbies" },
-  { 
-    title: "Software to test", 
-    href: "#",
-    subItems: [
-      { title: "Bwell (under construction)", href: "/cv" },
-      { title: "Knockout", href: "/knockout-main" }
-    ]
-  },
   { title: "Impressum", href: "/impressum" },
 ];
 
