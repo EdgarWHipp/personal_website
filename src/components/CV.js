@@ -1,6 +1,6 @@
 // src/components/CV.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const sections = [
   { title: "Info", href: "/info" },
@@ -11,7 +11,25 @@ const sections = [
 ];
 
 export default function CV() {
+  const location = useLocation();
   const [expandedSections, setExpandedSections] = useState(new Set());
+
+  const persona = (() => {
+    const qs = new URLSearchParams(location.search);
+    return (qs.get('view') || 'guest').toLowerCase();
+  })();
+
+  const visibleSections = (() => {
+    if (persona === 'recruiter') {
+      // Prioritize experience for recruiter view; optionally hide hobbies
+      return [
+        { title: "Experience", href: "/experience" },
+        { title: "Info", href: "/info" },
+        { title: "Impressum", href: "/impressum" },
+      ];
+    }
+    return sections;
+  })();
 
   const toggleSection = (title) => {
     const newExpanded = new Set(expandedSections);
@@ -26,7 +44,7 @@ export default function CV() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full">
       <div className="w-full max-w-xl mx-auto flex flex-col gap-6">
-        {sections.map((section) => (
+        {visibleSections.map((section) => (
           <div key={section.title}>
             {section.href.startsWith("/") ? (
               <div>
