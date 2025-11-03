@@ -86,20 +86,20 @@ export default function Hobbies() {
       >
         &#8592;
       </button>
-      <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-8">
+      <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-8 px-4">
         {/* Fixed slider area */}
         <div
           className="flex flex-col items-center justify-center w-full"
           style={{ height: "520px", minHeight: "520px" }}
         >
-          <div
-            className="flex flex-row items-center justify-center gap-4 w-full"
-            style={{ height: "320px", minHeight: "320px" }}
-          >
+        <div
+          className="flex flex-row items-center justify-center gap-2 md:gap-4 w-full"
+          style={{ height: "300px", minHeight: "300px" }}
+        >
             {/* Left button */}
             <button
               onClick={goLeft}
-              className="px-3 py-2 text-lg text-neutral-400 hover:text-neutral-700 focus:outline-none select-none border border-transparent hover:border-neutral-200 rounded transition"
+              className="px-2 md:px-3 py-2 text-lg text-neutral-400 hover:text-neutral-700 focus:outline-none select-none border border-transparent hover:border-neutral-200 rounded transition"
               aria-label="Previous image"
               disabled={current === 0}
               style={{ height: "48px" }}
@@ -108,11 +108,10 @@ export default function Hobbies() {
             </button>
             {/* Image */}
             <div
-              className="flex flex-col items-center justify-center"
+              className="flex flex-col items-center justify-center w-full"
               style={{
-                minWidth: "320px",
-                maxWidth: "480px",
-                height: "260px",
+                maxWidth: "360px",
+                height: "240px",
                 justifyContent: "center",
               }}
             >
@@ -133,9 +132,9 @@ export default function Hobbies() {
                   onLoad={() => handleImgLoad(current)}
                   style={{
                     aspectRatio: "4/3",
-                    height: "260px",
+                    height: "240px",
                     width: "100%",
-                    maxWidth: "480px",
+                    maxWidth: "360px",
                     cursor: "zoom-in",
                   }}
                   onClick={() => setViewerOpen(true)}
@@ -160,7 +159,7 @@ export default function Hobbies() {
             >
               <button
                 onClick={goRight}
-                className={`px-3 py-2 text-lg focus:outline-none select-none border border-transparent rounded transition ${rightBlocked ? "opacity-50 cursor-not-allowed blur-[1.5px]" : "text-neutral-400 hover:text-neutral-700 hover:border-neutral-200"}`}
+                className={`px-2 md:px-3 py-2 text-lg focus:outline-none select-none border border-transparent rounded transition ${rightBlocked ? "opacity-50 cursor-not-allowed blur-[1.5px]" : "text-neutral-400 hover:text-neutral-700 hover:border-neutral-200"}`}
                 aria-label="Next image"
                 disabled={rightBlocked}
                 onMouseEnter={() => rightBlocked && setShowTooltip(true)}
