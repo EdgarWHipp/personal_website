@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../utils/supabaseClient';
 
 export default function FramerLanding() {
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
-  const [user, setUser] = useState(null);
   const [showUserGuide, setShowUserGuide] = useState(false);
 
   useEffect(() => {
@@ -30,50 +28,16 @@ export default function FramerLanding() {
     
     window.addEventListener('scroll', throttledScroll, { passive: true });
     
-    // Check current auth state
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user || null);
-    };
-    
-    checkUser();
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user || null);
-      }
-    );
-
+    // No external auth provider
     return () => {
       window.removeEventListener('scroll', throttledScroll);
-      subscription.unsubscribe();
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/knockout-main`
-        }
-      });
-      if (error) throw error;
-    } catch (error) {
-      console.error('Error signing in with Google:', error);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      setUser(null);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
+  // No-op auth handlers (auth removed)
+  const handleGoogleSignIn = () => {};
+  const handleSignOut = () => {};
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-orange-500 via-red-600 to-yellow-500">
@@ -117,34 +81,7 @@ export default function FramerLanding() {
             >
               Pricing
             </button>
-            {user ? (
-              <>
-                <div className="text-white/80">
-                  {user.email}
-                </div>
-                <button 
-                  onClick={handleSignOut}
-                  className="bg-white/20 hover:bg-white/30 text-white px-6 py-2 rounded-full transition-colors"
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <>
-                <button 
-                  onClick={handleGoogleSignIn}
-                  className="text-white/80 hover:text-white transition-colors"
-                >
-                  Sign In
-                </button>
-                <button 
-                  onClick={handleGoogleSignIn}
-                  className="bg-white/20 hover:bg-white/30 text-white px-6 py-2 rounded-full transition-colors"
-                >
-                  Sign Up
-                </button>
-              </>
-            )}
+            {/* Auth removed */}
           </div>
         </div>
       </nav>

@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KimiTherapyAPI from '../services/kimiAPI';
 import configManager from '../utils/configManager';
-import { supabase, authService, lessonArchiveService } from '../utils/supabaseClient';
-import AuthModal from './AuthModal';
 
 function removePinyinBrackets(text) {
   // Removes anything in brackets that looks like pinyin (letters, numbers, spaces, tone marks)
@@ -14,28 +12,7 @@ function removePinyinBrackets(text) {
 export default function Training() {
   const navigate = useNavigate();
 
-  // Check authentication on component mount
-  useEffect(() => {
-    checkAuth();
-    
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user) {
-          setUser(session.user);
-        } else {
-          setUser(null);
-        }
-      }
-    );
-
-    return () => subscription?.unsubscribe();
-  }, []);
-
-  const checkAuth = async () => {
-    const { user } = await authService.getUser();
-    setUser(user);
-  };
+  // Auth removed
 
   // Load user progress from localStorage
   const loadUserProgress = () => {
@@ -95,10 +72,9 @@ export default function Training() {
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [lessonText, setLessonText] = useState('');
   const [error, setError] = useState('');
-  const [user, setUser] = useState(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [isArchiving, setIsArchiving] = useState(false);
-  const [lessonArchived, setLessonArchived] = useState(false);
+  const [user] = useState(null);
+  const [isArchiving] = useState(false);
+  const [lessonArchived] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
   const [lessonCompleted, setLessonCompleted] = useState(false);
   const [userProgress, setUserProgress] = useState({
@@ -791,33 +767,19 @@ export default function Training() {
     const currentProgress = { ...userProgress };
     const langProgress = currentProgress[selectedLanguage];
     const currentDifficultyLevel = langProgress.difficultyLevel || 1;
-    // Insert lesson into Supabase
-    const { error } = await supabase.from('archived_lessons').insert([
-      {
-        user_id: user.id,
-        language: selectedLanguage,
-        scenario: 'cafe',
-        lesson_script: lessonText,
-        comprehension_level: '80%+',
-        lesson_duration: '30s',
-        word_count: lessonText.split(' ').length,
-        difficulty_level: currentDifficultyLevel,
-      }
-    ]);
-    if (error) {
-      setError('Failed to save lesson to Supabase: ' + error.message);
-      return;
-    }
-    // Refetch lessons to update progress, streaks, and previousLessons
-    fetchLessonsFromSupabase(user.id).then(lessons => {
-      const { progress, streaks, lastCompleted, previousLessons } = computeProgressAndStreaks(lessons);
-      setUserProgress(progress);
-      setStreaks(streaks);
-      setLastCompleted(lastCompleted);
-      setPreviousLessons(previousLessons);
-    setLessonCompleted(true);
-    setShowProgressModal(true);
-    }).catch(console.error);
+  // Persist lesson locally (Supabase removed)
+  const current = { ...userProgress };
+  const langProgress = current[selectedLanguage] || { completedLessons: 0, difficultyLevel: 1 };
+  langProgress.completedLessons = (langProgress.completedLessons || 0) + 1;
+  langProgress.difficultyLevel = Math.min(10, (langProgress.difficultyLevel || 1) + 1);
+  current[selectedLanguage] = langProgress;
+  saveUserProgress(current);
+
+  // Save to local history
+  saveLessonToHistory(selectedLanguage, lessonText, langProgress.difficultyLevel);
+
+  setLessonCompleted(true);
+  setShowProgressModal(true);
   };
 
   const getDifficultyAdjustedPrompt = (language, difficultyLevel) => {
@@ -935,75 +897,7 @@ START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
     setIsPlaying(false);
   };
 
-  // Remove all localStorage usage for streaks, progress, and lessons.
-  // Add Supabase-based session management:
-
-  // Helper to fetch all lessons for the user from Supabase
-  const fetchLessonsFromSupabase = async (userId) => {
-    const { data, error } = await supabase
-      .from('archived_lessons')
-      .select('*')
-      .eq('user_id', userId)
-      .order('archived_at', { ascending: false });
-    if (error) throw error;
-    return data;
-  };
-
-  // Helper to compute progress and streaks from lessons
-  const computeProgressAndStreaks = (lessons) => {
-    const progress = { french: { completedLessons: 0, difficultyLevel: 1 }, chinese: { completedLessons: 0, difficultyLevel: 1 } };
-    const streaks = { french: 0, chinese: 0 };
-    const lastCompleted = { french: null, chinese: null };
-    const previousLessons = { french: [], chinese: [] };
-    const today = new Date().toISOString().slice(0, 10);
-    ['french', 'chinese'].forEach((lang) => {
-      const langLessons = lessons.filter(l => l.language === lang);
-      progress[lang].completedLessons = langLessons.length;
-      progress[lang].difficultyLevel = langLessons.length > 0 ? Math.max(...langLessons.map(l => l.difficulty_level || 1)) : 1;
-      previousLessons[lang] = langLessons.map(l => ({
-        id: l.id,
-        content: l.lesson_script,
-        difficulty: l.difficulty_level || 1,
-        timestamp: l.archived_at,
-        date: new Date(l.archived_at).toLocaleDateString(),
-        source: 'database',
-      }));
-      // Streak calculation
-      let streak = 0;
-      let lastDate = null;
-      for (const lesson of langLessons) {
-        const lessonDate = lesson.archived_at.slice(0, 10);
-        if (!lastDate) {
-          lastDate = lessonDate;
-          streak = lessonDate === today ? 1 : 0;
-        } else {
-          const diff = (new Date(lastDate) - new Date(lessonDate)) / (1000 * 60 * 60 * 24);
-          if (diff === 1) {
-            streak += 1;
-            lastDate = lessonDate;
-          } else {
-            break;
-          }
-        }
-      }
-      streaks[lang] = streak;
-      lastCompleted[lang] = lastDate;
-    });
-    return { progress, streaks, lastCompleted, previousLessons };
-  };
-
-  // On mount, fetch lessons and set state
-  useEffect(() => {
-    if (user) {
-      fetchLessonsFromSupabase(user.id).then(lessons => {
-        const { progress, streaks, lastCompleted, previousLessons } = computeProgressAndStreaks(lessons);
-        setUserProgress(progress);
-        setStreaks(streaks);
-        setLastCompleted(lastCompleted);
-        setPreviousLessons(previousLessons);
-      }).catch(console.error);
-    }
-  }, [user]);
+  // Supabase persistence removed; using localStorage only
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-900 to-teal-900 relative overflow-hidden">
@@ -1259,7 +1153,7 @@ START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
         )}
 
         {/* Archive Button (Legacy - for logged in users) */}
-        {user && lessonText && audioUrl && !lessonArchived && !lessonCompleted && (
+        {false && lessonText && audioUrl && !lessonArchived && !lessonCompleted && (
           <div className="mt-8 bg-cyan-500/20 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-6 max-w-2xl w-full">
             <h3 className="font-medium text-cyan-300 mb-3">Track Your Progress (Database)</h3>
             <p className="text-sm text-cyan-200 mb-4">
@@ -1387,15 +1281,7 @@ START THE ${isChinese ? 'CHINESE' : 'FRENCH'} LESSON NOW:`;
         </div>
       )}
 
-      {/* Authentication Modal */}
-      <AuthModal 
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        onSuccess={() => {
-          console.log('✅ Authentication successful');
-          checkAuth();
-        }}
-      />
+      {/* Auth removed */}
     </div>
   );
 } 
