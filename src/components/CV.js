@@ -7,7 +7,7 @@ const sections = [
   { title: "Software", href: "/software" },
   { title: "Experience", href: "/experience" },
   { title: "Hobbies & Blog", href: "/hobbies" },
-  { title: "Impressum", href: "/impressum" },
+  { title: "Legal Notice", href: "/legal_notice" },
 ];
 
 export default function CV() {
@@ -16,11 +16,11 @@ export default function CV() {
 
   const persona = (() => {
     const qs = new URLSearchParams(location.search);
-    return (qs.get('view') || 'guest').toLowerCase();
+    return (qs.get("view") || "guest").toLowerCase();
   })();
 
   const visibleSections = (() => {
-    if (persona === 'recruiter') {
+    if (persona === "recruiter") {
       // Prioritize experience for recruiter view; optionally hide hobbies
       return [
         { title: "Experience", href: "/experience" },
@@ -42,7 +42,41 @@ export default function CV() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full relative">
+      {/* Top right boxes for favorite spots */}
+      <div className="absolute top-8 right-8 flex flex-col gap-3 w-64 hidden lg:flex">
+        <section className="bg-orange-500 border-2 border-black p-3 shadow-[4px_4px_0_0_#000] select-none">
+          <h3 className="text-sm font-normal text-neutral-800 tracking-tight mb-2">
+            Mes endroits préférés à Paris
+          </h3>
+          <ul className="text-xs font-normal text-neutral-800 space-y-1">
+            <li>• </li>
+            <li>• </li>
+            <li>• </li>
+          </ul>
+        </section>
+        <section className="bg-orange-500 border-2 border-black p-3 shadow-[4px_4px_0_0_#000] select-none">
+          <h3 className="text-sm font-normal text-neutral-800 tracking-tight mb-2">
+            Meine Lieblingsorte in Berlin
+          </h3>
+          <ul className="text-xs font-normal text-neutral-800 space-y-1">
+            <li>• </li>
+            <li>• </li>
+            <li>• </li>
+          </ul>
+        </section>
+        <section className="bg-orange-500 border-2 border-black p-3 shadow-[4px_4px_0_0_#000] select-none">
+          <h3 className="text-sm font-normal text-neutral-800 tracking-tight mb-2">
+            我在上海最喜欢的地方
+          </h3>
+          <ul className="text-xs font-normal text-neutral-800 space-y-1">
+            <li>• </li>
+            <li>• </li>
+            <li>• </li>
+          </ul>
+        </section>
+      </div>
+
       <div className="w-full max-w-xl mx-auto flex flex-col gap-6">
         {visibleSections.map((section) => (
           <div key={section.title}>
@@ -64,11 +98,11 @@ export default function CV() {
                   </span>
                   {section.subItems && section.subItems.length > 0 && (
                     <span className="text-neutral-400 group-hover:text-orange-400 transition-colors duration-200">
-                      {expandedSections.has(section.title) ? '−' : '+'}
+                      {expandedSections.has(section.title) ? "−" : "+"}
                     </span>
                   )}
                 </Link>
-                
+
                 {/* Sub-items */}
                 {section.subItems && expandedSections.has(section.title) && (
                   <div className="ml-8 mt-2 space-y-2">
@@ -99,11 +133,11 @@ export default function CV() {
                   </span>
                   {section.subItems && section.subItems.length > 0 && (
                     <span className="text-neutral-400 group-hover:text-orange-400 transition-colors duration-200">
-                      {expandedSections.has(section.title) ? '−' : '+'}
+                      {expandedSections.has(section.title) ? "−" : "+"}
                     </span>
                   )}
                 </button>
-                
+
                 {/* Sub-items */}
                 {section.subItems && expandedSections.has(section.title) && (
                   <div className="ml-8 mt-2 space-y-2">

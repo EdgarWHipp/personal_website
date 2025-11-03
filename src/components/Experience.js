@@ -2,7 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const experiences = [
-  { title: "IT Consulting Intern", place: "PwC", year: "2025" },
+  {
+    title: "IT Consulting Intern",
+    place: "PwC",
+    year: "February 2025 - Juli 2025",
+  },
   {
     title: "Invited AI Hackathon Participant",
     place: "AI Hackathon Berlin from {Tech: Europe}",
@@ -16,22 +20,22 @@ const experiences = [
   {
     title: "Cloud Software Engineer - Working Student",
     place: "SAP SE",
-    year: "2023 - 2024",
+    year: "October 2023 - October 2024",
   },
   {
     title: "Microsoft Student Learn Ambassador",
     place: "Microsoft",
-    year: "2023 - 2024",
+    year: "Juli 2023 - February 2024",
   },
   {
     title: "Data Engineer - Working Student",
     place: "1&1 SE",
-    year: "2022 - 2023",
+    year: "October 2022 - September 2023",
   },
   {
     title: "Teaching Assistant",
     place: "Karlsruher Institut für Technologie (KIT)",
-    year: "2021 - 2022",
+    year: "October 2021 - March 2022",
   },
 
   // Add more experiences as needed
@@ -40,7 +44,7 @@ const experiences = [
 export default function Experience() {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center min-h-screen pt-16 relative main-dark-bg">
+    <div className="flex flex-col items-center min-h-screen pt-12 relative main-dark-bg">
       {/* Back button top left */}
       <button
         onClick={() => navigate("/cv")}
@@ -49,32 +53,25 @@ export default function Experience() {
       >
         &#8592;
       </button>
-      <div className="w-full max-w-2xl mx-auto grid grid-cols-1 gap-6 mt-0 px-4 md:px-0">
+      <div className="w-full max-w-2xl mx-auto grid grid-cols-1 gap-2.5 mt-0 px-4 md:px-0 pb-20">
         {experiences.map((exp, idx) => {
-          const accentPalette = [
-            "bg-yellow-400",
-            "bg-rose-500",
-            "bg-lime-400",
-            "bg-cyan-400",
-            "bg-fuchsia-500",
-            "bg-orange-400",
-          ];
-          const accent = accentPalette[idx % accentPalette.length];
           return (
             <section
               key={idx}
-              className={`bg-white relative border-4 border-black p-5 md:p-6 select-none
-              shadow-[8px_8px_0_0_#000] transition-transform hover:-translate-x-1 hover:-translate-y-1`}
+              className="bg-orange-500 relative border-2 border-black p-3 md:p-3.5 select-none shadow-[4px_4px_0_0_#000] transition-all hover:shadow-[6px_6px_0_0_#000] hover:-translate-x-0.5 hover:-translate-y-0.5"
               aria-label={`${exp.title} at ${exp.place}`}
             >
-              <div className={`h-2 w-16 ${accent} border-2 border-black mb-3`}></div>
               <div className="flex items-start justify-between gap-4">
-                <h3 className="text-lg md:text-xl font-extrabold text-black tracking-tight">
+                <h3 className="text-sm md:text-base font-normal text-neutral-800 tracking-tight">
                   {exp.title}
                 </h3>
-                <span className="text-xs md:text-sm font-extrabold text-black uppercase">{exp.year}</span>
+                <span className="text-xs font-normal text-neutral-800 uppercase whitespace-nowrap">
+                  {exp.year}
+                </span>
               </div>
-              <p className="mt-1 text-sm md:text-base font-semibold text-black">{exp.place}</p>
+              <p className="mt-0.5 text-xs md:text-sm font-normal text-neutral-800">
+                {exp.place}
+              </p>
             </section>
           );
         })}
