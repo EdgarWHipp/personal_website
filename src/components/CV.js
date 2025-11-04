@@ -75,6 +75,15 @@ export default function CV() {
             <li>• </li>
           </ul>
         </section>
+
+        {/* Profile image */}
+        <div className="mt-3 border-2 border-black shadow-[4px_4px_0_0_#000]">
+          <img
+            src="/profile-temple.jpg"
+            alt="Edgar at temple in Shanghai"
+            className="w-full h-auto object-cover"
+          />
+        </div>
       </div>
 
       <div className="w-full max-w-xl mx-auto flex flex-col gap-6">
