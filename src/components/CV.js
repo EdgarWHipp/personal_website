@@ -77,11 +77,12 @@ export default function CV() {
         </section>
 
         {/* Profile image */}
-        <div className="mt-3 border-2 border-black shadow-[4px_4px_0_0_#000]">
+        <div className="mt-3 border-2 border-black shadow-[3px_3px_0_0_#000] overflow-hidden">
           <img
-            src="/profile-temple.jpg"
+            src="/me.jpeg"
             alt="Edgar at temple in Shanghai"
             className="w-full h-auto object-cover"
+            style={{ maxHeight: "320px" }}
           />
         </div>
       </div>
