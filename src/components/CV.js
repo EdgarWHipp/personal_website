@@ -13,6 +13,7 @@ const sections = [
 export default function CV() {
   const location = useLocation();
   const [expandedSections, setExpandedSections] = useState(new Set());
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const persona = (() => {
     const qs = new URLSearchParams(location.search);
@@ -81,8 +82,10 @@ export default function CV() {
           <img
             src="/me.jpeg"
             alt="Edgar at temple in Shanghai"
-            className="w-full h-auto object-cover"
+            className={`w-full h-auto object-cover transition-all duration-700 ${imgLoaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"}`}
             style={{ maxHeight: "320px" }}
+            loading="eager"
+            onLoad={() => setImgLoaded(true)}
           />
         </div>
       </div>
