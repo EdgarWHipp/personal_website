@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "chart.js": "^4.5.0",
-    "react": "18.2.0",
+    "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
-    "react-dom": "18.2.0",
-    "react-scripts": "^5.0.1",
-    "react-router-dom": "^7.7.0"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.7.0",
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,12 +51,12 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-tailwindcss": "^3.18.0",
+    "glob": "^9.3.3",
     "globals": "^16.3.0",
     "postcss": "^8.4.21",
     "prettier": "^3.6.2",
     "react-scripts": "^5.0.1",
     "svgo": "^4.0.0",
-    "tailwindcss": "^3.4.0",
-    "glob": "^9.3.3"
+    "tailwindcss": "^3.4.0"
   }
 }
