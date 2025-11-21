@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 // All images from public/hobbies/
 const imageFilenames = [
-  "bb4cb569-c469-4ca4-a825-9960ad865329.avif",
-  "c480c571-9804-4706-8019-3b414f55aa46.avif",
-  "d0cc2657-bf9f-481f-aebd-12c3d46895e4.avif",
-  "IMG_1934.avif",
-  "IMG_2064.avif",
-  "IMG_8737.avif",
-  "2BAB8307-5AC9-4810-8071-D0E19066B235_1_105_c.avif",
-  "5DF98E1B-A75B-4E55-94E7-4D33CE3F571E_4_5005_c.avif",
+  "bb4cb569-c469-4ca4-a825-9960ad865329",
+  "c480c571-9804-4706-8019-3b414f55aa46",
+  "d0cc2657-bf9f-481f-aebd-12c3d46895e4",
+  "IMG_1934",
+  "IMG_2064",
+  "IMG_8737",
+  "2BAB8307-5AC9-4810-8071-D0E19066B235_1_105_c",
+  "5DF98E1B-A75B-4E55-94E7-4D33CE3F571E_4_5005_c",
 ];
 
 // Placeholder texts for each image
@@ -92,10 +92,10 @@ export default function Hobbies() {
           className="flex flex-col items-center justify-center w-full"
           style={{ height: "520px", minHeight: "520px" }}
         >
-        <div
-          className="flex flex-row items-center justify-center gap-2 md:gap-4 w-full"
-          style={{ height: "300px", minHeight: "300px" }}
-        >
+          <div
+            className="flex flex-row items-center justify-center gap-2 md:gap-4 w-full"
+            style={{ height: "300px", minHeight: "300px" }}
+          >
             {/* Left button */}
             <button
               onClick={goLeft}
@@ -124,12 +124,9 @@ export default function Hobbies() {
                   justifyContent: "center",
                 }}
               >
-                <img
-                  src={`/hobbies/${imageFilenames[current]}`}
-                  alt={`Hobby ${current + 1}`}
-                  className={`object-contain w-full max-w-2xl transition-all duration-700 outline-none ${imgLoaded[current] ? "blur-0" : "blur-sm"}`}
-                  loading="lazy"
-                  onLoad={() => handleImgLoad(current)}
+                <picture
+                  onClick={() => setViewerOpen(true)}
+                  tabIndex={0}
                   style={{
                     aspectRatio: "4/3",
                     height: "240px",
@@ -137,9 +134,27 @@ export default function Hobbies() {
                     maxWidth: "360px",
                     cursor: "zoom-in",
                   }}
-                  onClick={() => setViewerOpen(true)}
-                  tabIndex={0}
-                />
+                >
+                  <source
+                    srcSet={`/hobbies/${imageFilenames[current]}.avif`}
+                    type="image/avif"
+                  />
+                  <source
+                    srcSet={`/hobbies/${imageFilenames[current]}.webp`}
+                    type="image/webp"
+                  />
+                  <img
+                    src={`/hobbies/${imageFilenames[current]}.jpeg`}
+                    alt={`Hobby ${current + 1}`}
+                    className={`object-contain w-full max-w-2xl transition-all duration-700 outline-none ${imgLoaded[current] ? "blur-0" : "blur-sm"}`}
+                    loading="lazy"
+                    onLoad={() => handleImgLoad(current)}
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                    }}
+                  />
+                </picture>
               </div>
               <div
                 className="text-xs md:text-sm text-neutral-500 dark:text-white select-none text-center"
@@ -195,14 +210,26 @@ export default function Hobbies() {
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cursor-zoom-out"
           onClick={() => setViewerOpen(false)}
         >
-          <img
-            src={`/hobbies/${imageFilenames[current]}`}
-            alt={`Hobby ${current + 1}`}
+          <picture
             className="max-w-full max-h-[90vh] object-contain outline-none"
             style={{ background: "transparent" }}
             onClick={(e) => e.stopPropagation()}
-            tabIndex={0}
-          />
+          >
+            <source
+              srcSet={`/hobbies/${imageFilenames[current]}.avif`}
+              type="image/avif"
+            />
+            <source
+              srcSet={`/hobbies/${imageFilenames[current]}.webp`}
+              type="image/webp"
+            />
+            <img
+              src={`/hobbies/${imageFilenames[current]}.jpeg`}
+              alt={`Hobby ${current + 1}`}
+              tabIndex={0}
+              className="max-w-full max-h-[90vh] object-contain"
+            />
+          </picture>
         </div>
       )}
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
