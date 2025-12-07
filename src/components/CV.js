@@ -51,9 +51,9 @@ export default function CV() {
             Mes endroits préférés à Paris
           </h3>
           <ul className="text-xs font-normal text-neutral-800 space-y-1">
-            <li>• </li>
-            <li>• </li>
-            <li>• </li>
+            <li>• Happy Nouilles</li>
+            <li>• Partisan Café Artisanal</li>
+            <li>• Caveau de la Huchette</li>
           </ul>
         </section>
         <section className="bg-orange-500 border-2 border-black p-3 shadow-[4px_4px_0_0_#000] select-none">
@@ -61,9 +61,9 @@ export default function CV() {
             Meine Lieblingsorte in Berlin
           </h3>
           <ul className="text-xs font-normal text-neutral-800 space-y-1">
-            <li>• </li>
-            <li>• </li>
-            <li>• </li>
+            <li>• Pluto</li>
+            <li>• Beirut-Express</li>
+            <li>• Café Luzia</li>
           </ul>
         </section>
         <section className="bg-orange-500 border-2 border-black p-3 shadow-[4px_4px_0_0_#000] select-none">
@@ -71,9 +71,9 @@ export default function CV() {
             我在上海最喜欢的地方
           </h3>
           <ul className="text-xs font-normal text-neutral-800 space-y-1">
-            <li>• </li>
-            <li>• </li>
-            <li>• </li>
+            <li>• SLAB TOWN石板城咖啡</li>
+            <li>• Yougen Congbu Improved Old Hot Pot (Quanguoshou Shop)</li>
+            <li>• Bar Rock</li>
           </ul>
         </section>
 
