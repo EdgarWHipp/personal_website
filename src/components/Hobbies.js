@@ -30,6 +30,7 @@ const infoTexts = [
   `I was thinking of starting a little blog in this section of the website. It's something I've never tried before, and I think it could boost my creativity. Throughout my academic journey, I've often struggled to find time to relax and keep an open mind. However, since starting my master's degree, I've experienced greater mental freedom. I started studying French intensively after my semester abroad, picked up the piano again, and took up cooking in my spare time. I also enjoy spending time in nature to clear my head.`,
   `Je pense que j'aurais intérêt à écrire quelques articles de blog en français pour progresser dans la langue. J'adore la culture française et je sens que je dois retourner souvent à Paris. Pour le moment, je suis vraiment ravi de mes opportunités et j'ai la chance de pouvoir explorer de plus en plus, que ce soit à Shanghai ou à Paris. Au revoir ! On se voit bientôt.`,
   `My Erasmus semester in Paris has been a time of great reflection and personal growth. I've learned a lot about myself and the world around me. I've also made some amazing friends and experiences that I'll cherish forever.`,
+  `Sometimes all you need to feel good are sun rays on your face. A book. Grass. Clean air`,
 ];
 
 export default function Hobbies() {
@@ -64,7 +65,7 @@ export default function Hobbies() {
   };
 
   const goRight = () => {
-    if (current < 2) {
+    if (current < 3) {
       setCurrent((c) => c + 1);
     }
   };
