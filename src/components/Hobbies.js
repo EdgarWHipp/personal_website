@@ -29,12 +29,7 @@ const imageTexts = [
 const infoTexts = [
   `I was thinking of starting a little blog in this section of the website. It's something I've never tried before, and I think it could boost my creativity. Throughout my academic journey, I've often struggled to find time to relax and keep an open mind. However, since starting my master's degree, I've experienced greater mental freedom. I started studying French intensively after my semester abroad, picked up the piano again, and took up cooking in my spare time. I also enjoy spending time in nature to clear my head.`,
   `Je pense que j'aurais intérêt à écrire quelques articles de blog en français pour progresser dans la langue. J'adore la culture française et je sens que je dois retourner souvent à Paris. Pour le moment, je suis vraiment ravi de mes opportunités et j'ai la chance de pouvoir explorer de plus en plus, que ce soit à Shanghai ou à Paris. Au revoir ! On se voit bientôt.`,
-  `Playing the piano is my escape. Each note helps me unwind and brings a sense of calm after a busy day.`,
-  `Experimenting in the kitchen is both fun and relaxing. Rainy days are perfect for trying out new recipes and enjoying comfort food.`,
-  `My desk is where ideas come to life. The view outside keeps me inspired and focused on my goals.`,
-  `Biking through the city is my way of exploring and staying active. Every ride brings a new discovery.`,
-  `Studying abroad opened my eyes to new cultures and experiences. It was a time of growth and adventure.`,
-  `The soft evening light in my apartment creates a peaceful atmosphere, perfect for reflection and relaxation.`,
+  `My Erasmus semester in Paris has been a time of great reflection and personal growth. I've learned a lot about myself and the world around me. I've also made some amazing friends and experiences that I'll cherish forever.`,
 ];
 
 export default function Hobbies() {
@@ -69,12 +64,12 @@ export default function Hobbies() {
   };
 
   const goRight = () => {
-    if (current < 1) {
+    if (current < 2) {
       setCurrent((c) => c + 1);
     }
   };
 
-  const rightBlocked = current >= 1;
+  const rightBlocked = current >= 2;
 
   return (
     <div className="flex flex-col min-h-screen py-12 relative items-center justify-center main-dark-bg">
