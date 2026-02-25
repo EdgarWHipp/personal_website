@@ -11,8 +11,7 @@ const YOUTUBE_POOLS = {
     ],
     '90s': [
         'i9wswkhunrA', // 90s mix generic
-        'kK0GDxqfe3s', // 90s chill mix
-        'Hu3yS9fI'  // alternative 90s
+        'kK0GDxqfe3s' // 90s chill mix
     ],
     cn_underground: [
         { vid: 'llCvGm1nrq4', list: 'PLfjKTYTZxAzAvxM9N_-z_Qoc30u4XsZIj' }, // User requested mix 1
