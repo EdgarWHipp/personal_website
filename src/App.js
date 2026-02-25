@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Info from "./components/Info";
-import BasicCursor from "./components/BasicCursor";
+import Pomodoro from "./components/Pomodoro";
 
 function App() {
   return (
     <Router>
-      <BasicCursor />
       <Routes>
+        <Route path="/pomodoro" element={<Pomodoro />} />
         <Route path="/*" element={<Info />} />
       </Routes>
     </Router>

@@ -11,7 +11,7 @@ const hobbyImages = [
 ];
 
 const imageLocations = [
-  "Santiago de Compostela",
+  "SCQ",
   "三亚",
   "福州",
   "福州",
@@ -218,9 +218,10 @@ export default function Info() {
         .name-vhs {
           animation: nameVHS 1.6s ease both;
         }
-        .card-line-1 { animation: cardFlicker 1.2s ease 0.2s both; }
-        .card-line-2 { animation: cardFlicker 1.2s ease 0.7s both; }
-        .card-line-3 { animation: cardFlicker 1.2s ease 1.2s both; }
+        .card-line-1 { animation: cardFlicker 1.2s ease 0.1s both; }
+        .card-line-2 { animation: cardFlicker 1.2s ease 0.6s both; }
+        .card-line-3 { animation: cardFlicker 1.2s ease 1.1s both; }
+        .card-line-4 { animation: cardFlicker 1.2s ease 1.6s both; }
         .vhs-img { filter: contrast(1.12) saturate(0.6) brightness(0.78) sepia(0.22); }
         .vhs-glitch {
           animation: vhsGlitch 0.1s steps(1) infinite;
@@ -234,28 +235,26 @@ export default function Info() {
           position: absolute;
           top: 1.5rem;
           right: 1.5rem;
-          font-size: 10px;
-          letter-spacing: 0.2em;
+          font-size: 11px;
+          letter-spacing: 0.1em;
           color: rgba(163,163,163,0.7);
           text-decoration: none;
-          transition: color 0.2s;
-          font-family: 'Share Tech Mono', 'Courier New', monospace;
+          transition: all 0.2s ease;
+          font-family: system-ui, -apple-system, sans-serif;
         }
-        .pom-link:hover { color: #f97316; }
+        .pom-link:hover { transform: scale(1.08); color: #f97316; }
       `}</style>
 
       <div
-        className="flex flex-col items-center min-h-screen relative main-dark-bg pb-44"
+        className="text-xs md:text-sm font-normal text-neutral-700 dark:text-white text-center leading-relaxed"
         style={{ paddingTop: "18vh" }}
       >
         {/* POMODORO nav link */}
-        <a href="/pomodoro" className="pom-link">POMODORO</a>
+        <a href="/pomodoro" className="pom-link">pomodoro</a>
 
         <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-5 px-4">
           {/* Edgar Hipp title */}
-          <p className="name-vhs mono" style={{ fontSize: 11, letterSpacing: '0.28em', color: 'rgba(163,163,163,0.6)', marginBottom: -8 }}>
-            EDGAR HIPP
-          </p>
+
 
           {/* Bio */}
           <p
@@ -561,9 +560,10 @@ export default function Info() {
         >
           <div className="w-full max-w-xl mx-auto flex flex-row justify-between items-end px-4 text-xs text-neutral-500">
             <div className="text-left leading-tight">
-              <span className="card-line-1">Edgar H.</span><br />
-              <span className="card-line-2">Berlin, Germany</span><br />
-              <span className="card-line-3">edgarhipp@protonmail.com</span>
+              <span className="card-line-1">Berlin, Germany</span><br />
+              <span className="card-line-2">Edgar Hipp</span><br />
+              <span className="card-line-3">Student, Software Engineer</span><br />
+              <span className="card-line-4">edgarhipp@protonmail.com</span>
             </div>
 
           </div>
