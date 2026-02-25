@@ -9,7 +9,7 @@ export default function BasicCursor() {
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    
+
     const style = document.createElement('style');
     style.innerHTML = `
       *, *:hover, *:active, *:focus {
