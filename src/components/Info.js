@@ -247,34 +247,42 @@ export default function Info() {
 
       <div
         className="text-xs md:text-sm font-normal text-neutral-700 dark:text-white text-center leading-relaxed"
-        style={{ paddingTop: "18vh" }}
+        style={{ paddingTop: "16vh", fontFamily: "Georgia, serif" }}
       >
-        {/* POMODORO nav link */}
-        <a href="/pomodoro" className="pom-link">pomodoro</a>
+        {/* Social Links & CV (Header Left) */}
+        <div
+          className="absolute flex gap-4 text-[11px] tracking-widest text-neutral-500/70"
+          style={{ top: "1.5rem", left: "1.5rem", fontFamily: "system-ui, -apple-system, sans-serif" }}
+        >
+          <a href="https://github.com/EdgarWHipp" target="_blank" rel="noreferrer" className="hover:text-orange-500 hover:scale-105 transition-all duration-200 uppercase">GitHub</a>
+          <span className="opacity-40">/</span>
+          <a href="https://www.linkedin.com/in/edgar-hipp-b850aa200/" target="_blank" rel="noreferrer" className="hover:text-orange-500 hover:scale-105 transition-all duration-200 uppercase">LinkedIn</a>
+          <span className="opacity-40">/</span>
+          <a href="mailto:edgarhipp@protonmail.com" className="hover:text-orange-500 hover:scale-105 transition-all duration-200 uppercase">Email</a>
+          <span className="opacity-40">/</span>
+          <a href="/Resume___one_page-14.pdf" download className="hover:text-orange-500 hover:scale-105 transition-all duration-200 uppercase">CV</a>
+        </div>
+
+        {/* POMODORO nav link (Header Right) */}
+        <a href="/pomodoro" className="pom-link" style={{ fontFamily: "system-ui, sans-serif" }}>pomodoro</a>
 
         <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-5 px-4">
           {/* Edgar Hipp title */}
 
 
-          {/* Bio */}
-          <p
-            className="text-xs md:text-sm font-normal text-neutral-700 dark:text-white text-center leading-relaxed"
-            style={{ maxWidth: "28rem" }}
-          >
-            {infoText}
-          </p>
-
-          {/* CV link */}
-          <a
-            href="/Resume___one_page-14.pdf"
-            download
-            className="text-xs md:text-sm text-neutral-500 dark:text-white underline hover:text-orange-500 transition-colors duration-200"
-          >
-            Download my CV (PDF)
-          </a>
+          {/* Header Content Section (Shifted Upwards) */}
+          <div className="flex flex-col items-center gap-8 -mt-18 mb-10">
+            {/* Bio */}
+            <p
+              className="text-sm md:text-base font-normal text-neutral-700 dark:text-neutral-300 text-center leading-relaxed"
+              style={{ maxWidth: "32rem" }}
+            >
+              {infoText}
+            </p>
+          </div>
 
           {/* ── CRT TV ── */}
-          <div style={{ perspective: "950px", perspectiveOrigin: "50% 45%" }}>
+          <div className="mt-29 md:mt-12" style={{ perspective: "950px", perspectiveOrigin: "50% 45%" }}>
             <div
               style={{
                 position: "relative",
