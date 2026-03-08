@@ -290,7 +290,7 @@ export default function Info() {
 
           {/* CV */}
           <a
-            href="/Resume___one_page-14.pdf"
+            href="/Résumé.pdf"
             download
             title="Download CV"
             style={{
