@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 
-const infoText = `Currently seeking opportunities in tech while finishing my masters. Love working on creative projects. Give me more sunshine`;
+const infoText = `Hi, I'm Edgar.
+Currently a Master's student at KIT, focusing on HCI and automation.
+I'll probably solve a few problems on my journey.`;
 
 const hobbyImages = [
   "/hobbies/bb4cb569-c469-4ca4-a825-9960ad865329.avif",
