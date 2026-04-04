@@ -418,7 +418,7 @@ export default function Info() {
           <div className="flex flex-col items-center gap-8 -mt-18 mb-10">
             {/* Bio */}
             <p
-              className="mono text-sm md:text-base font-normal text-neutral-700 dark:text-neutral-300 text-center leading-relaxed"
+              className="text-sm md:text-base font-normal text-neutral-700 dark:text-neutral-300 text-center leading-relaxed"
               style={{ maxWidth: "32rem" }}
             >
               {infoText}
