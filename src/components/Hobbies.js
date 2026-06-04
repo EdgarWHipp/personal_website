@@ -1,44 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// All images from public/hobbies/
-const imageFilenames = [
-  "bb4cb569-c469-4ca4-a825-9960ad865329",
-  "c480c571-9804-4706-8019-3b414f55aa46",
-  "d0cc2657-bf9f-481f-aebd-12c3d46895e4",
-  "IMG_1934",
-  "IMG_2064",
-  "IMG_8737",
-  "2BAB8307-5AC9-4810-8071-D0E19066B235_1_105_c",
-  "5DF98E1B-A75B-4E55-94E7-4D33CE3F571E_4_5005_c",
-];
-
-// Placeholder texts for each image
-const imageTexts = [
-  "A rainy hike, Santiago de Compestega",
-  "Suits and old cars, Vienna",
-  "Fête de la Musique at the Seine, Paris",
-  "Viktoriapark, Berlin",
-  "Meeting good friends, Paris",
-  "Cider with my brother, London",
-  "Explorer cat, Leipzig",
-  "Skyline, Shanghai",
-];
-
-// Info text for each image
-const infoTexts = [
-  `I was thinking of starting a little blog in this section of the website. It's something I've never tried before, and I think it could boost my creativity. Throughout my academic journey, I've often struggled to find time to relax and keep an open mind. However, since starting my master's degree, I've experienced greater mental freedom. I started studying French intensively after my semester abroad, picked up the piano again, and took up cooking in my spare time. I also enjoy spending time in nature to clear my head.`,
-  `Je pense que j'aurais intérêt à écrire quelques articles de blog en français pour progresser dans la langue. J'adore la culture française et je sens que je dois retourner souvent à Paris. Pour le moment, je suis vraiment ravi de mes opportunités et j'ai la chance de pouvoir explorer de plus en plus, que ce soit à Shanghai ou à Paris. Au revoir ! On se voit bientôt.`,
-  `My Erasmus semester in Paris has been a time of great reflection and personal growth. I've learned a lot about myself and the world around me. I've also made some amazing friends and experiences that I'll cherish forever.`,
-  `Sometimes all you need to feel good are sun rays on your face. A book. Grass. Clean air`,
+// All slides: existing hobbies + new workshop images + blog texts
+const slides = [
+  {
+    path: "/hobbies/bb4cb569-c469-4ca4-a825-9960ad865329.avif",
+    caption: "A rainy hike, Santiago de Compostela",
+    text: `I was thinking of starting a little blog in this section of the website. It's something I've never tried before, and I think it could boost my creativity. Throughout my academic journey, I've often struggled to find time to relax and keep an open mind. However, since starting my master's degree, I've experienced greater mental freedom. I started studying French intensively after my semester abroad, picked up the piano again, and took up cooking in my spare time. I also enjoy spending time in nature to clear my head.`,
+  },
+  {
+    path: "/hobbies/IMG_6215(1).jpg",
+    caption: "Suits and old cars, Vienna",
+    text: `Je pense que j'aurais intérêt à écrire quelques articles de blog en français pour progresser dans la langue. J'adore la culture française et je sens que je dois retourner souvent à Paris. Pour le moment, je suis vraiment ravi de mes opportunités et j'ai la chance de pouvoir explorer de plus en plus, que ce soit à Shanghai ou à Paris. Au revoir ! On se voit bientôt.`,
+  },
+  {
+    path: "/hobbies/IMG_8418.jpg",
+    caption: "Fête de la Musique at the Seine, Paris",
+    text: `My Erasmus semester in Paris has been a time of great reflection and personal growth. I've learned a lot about myself and the world around me. I've also made some amazing friends and experiences that I'll cherish forever.`,
+  },
+  {
+    path: "/hobbies/IMG_8661.jpg",
+    caption: "Viktoriapark, Berlin",
+    text: `Berlin has become my home base. After my time at PwC, I joined a startup here and I'm loving the energy. The city moves fast, and so does the tech scene. It's the perfect place to finish my Master's while gaining real hands-on experience. On weekends, I still seek out quiet spots like this to recharge.`,
+  },
+  {
+    path: "/hobbies/me.jpeg",
+    caption: "Shanghai",
+    text: `Sometimes I look back at my time in Shanghai and realize how much that experience shaped me. Now, with a new role in a Berlin startup and my Master's thesis wrapping up, I feel like I'm at another inflection point. I'm excited for what's ahead — building things, solving problems, and hopefully finding time to keep cooking and playing piano along the way.`,
+  },
+  {
+    path: "/figures/ws1_workshop_overview.jpg",
+    caption: "Workshop for my Master's thesis",
+    text: `Holding this workshop for my Master's thesis was one of the highlights of my academic journey. I designed activities to explore human-computer interaction concepts with participants, and seeing everyone engage so actively exceeded my expectations. The overview shot captures the energy in the room — people collaborating, discussing, and creating together.`,
+  },
+  {
+    path: "/figures/ws1_groupwork.jpg",
+    caption: "Group work during the workshop",
+    text: `The group work sessions were where the real magic happened. Participants dove into hands-on activities, and the discussions that emerged were incredibly insightful. This workshop not only provided rich data for my thesis but also reminded me why I chose HCI in the first place — technology is at its best when it brings people together to solve meaningful problems.`,
+  },
 ];
 
 export default function Hobbies() {
   const [current, setCurrent] = useState(0);
-  const [imgLoaded, setImgLoaded] = useState(
-    Array(imageFilenames.length).fill(false),
-  );
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(Array(slides.length).fill(false));
   const [viewerOpen, setViewerOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -65,12 +69,8 @@ export default function Hobbies() {
   };
 
   const goRight = () => {
-    if (current < 3) {
-      setCurrent((c) => c + 1);
-    }
+    if (current < slides.length - 1) setCurrent((c) => c + 1);
   };
-
-  const rightBlocked = current >= 2;
 
   return (
     <div className="flex flex-col min-h-screen py-12 relative items-center justify-center main-dark-bg">
@@ -98,7 +98,7 @@ export default function Hobbies() {
               className="px-2 md:px-3 py-2 text-lg text-neutral-400 hover:text-neutral-700 focus:outline-none select-none border border-transparent hover:border-neutral-200 rounded transition"
               aria-label="Previous image"
               disabled={current === 0}
-              style={{ height: "48px" }}
+              style={{ height: "48px", opacity: current === 0 ? 0.3 : 1 }}
             >
               &#8592;
             </button>
@@ -120,7 +120,7 @@ export default function Hobbies() {
                   justifyContent: "center",
                 }}
               >
-                <picture
+                <div
                   onClick={() => setViewerOpen(true)}
                   tabIndex={0}
                   style={{
@@ -131,17 +131,9 @@ export default function Hobbies() {
                     cursor: "zoom-in",
                   }}
                 >
-                  <source
-                    srcSet={`/hobbies/${imageFilenames[current]}.avif`}
-                    type="image/avif"
-                  />
-                  <source
-                    srcSet={`/hobbies/${imageFilenames[current]}.webp`}
-                    type="image/webp"
-                  />
                   <img
-                    src={`/hobbies/${imageFilenames[current]}.jpeg`}
-                    alt={`Hobby ${current + 1}`}
+                    src={slides[current].path}
+                    alt={slides[current].caption}
                     className={`object-contain w-full max-w-2xl transition-all duration-700 outline-none ${imgLoaded[current] ? "blur-0" : "blur-sm"}`}
                     loading="lazy"
                     onLoad={() => handleImgLoad(current)}
@@ -150,7 +142,7 @@ export default function Hobbies() {
                       width: "100%",
                     }}
                   />
-                </picture>
+                </div>
               </div>
               <div
                 className="text-xs md:text-sm text-neutral-500 dark:text-white select-none text-center"
@@ -160,30 +152,23 @@ export default function Hobbies() {
                   marginTop: "20px",
                 }}
               >
-                {imageTexts[current]}
+                {slides[current].caption}
               </div>
             </div>
-            {/* Right button with tooltip */}
+            {/* Right button */}
             <div
               className="relative flex items-center"
               style={{ height: "48px" }}
             >
               <button
                 onClick={goRight}
-                className={`px-2 md:px-3 py-2 text-lg focus:outline-none select-none border border-transparent rounded transition ${rightBlocked ? "opacity-50 cursor-not-allowed blur-[1.5px]" : "text-neutral-400 hover:text-neutral-700 hover:border-neutral-200"}`}
+                className="px-2 md:px-3 py-2 text-lg focus:outline-none select-none border border-transparent rounded transition text-neutral-400 hover:text-neutral-700 hover:border-neutral-200"
                 aria-label="Next image"
-                disabled={rightBlocked}
-                onMouseEnter={() => rightBlocked && setShowTooltip(true)}
-                onMouseLeave={() => setShowTooltip(false)}
-                style={{ height: "48px" }}
+                disabled={current === slides.length - 1}
+                style={{ height: "48px", opacity: current === slides.length - 1 ? 0.3 : 1 }}
               >
                 &#8594;
               </button>
-              {rightBlocked && showTooltip && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-3 py-1 bg-neutral-800 text-white text-xs rounded shadow select-none whitespace-nowrap z-10">
-                  Under maintenance
-                </div>
-              )}
             </div>
           </div>
           {/* Info Text in a fixed area for monotony */}
@@ -195,7 +180,7 @@ export default function Hobbies() {
               className="text-xs md:text-sm font-normal text-neutral-700 dark:text-white whitespace-pre-line text-center leading-relaxed flex items-center justify-center w-full"
               style={{ fontFamily: "inherit", height: "64px" }}
             >
-              {infoTexts[current]}
+              {slides[current].text}
             </div>
           </div>
         </div>
@@ -206,26 +191,13 @@ export default function Hobbies() {
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cursor-zoom-out"
           onClick={() => setViewerOpen(false)}
         >
-          <picture
+          <img
+            src={slides[current].path}
+            alt={slides[current].caption}
             className="max-w-full max-h-[90vh] object-contain outline-none"
             style={{ background: "transparent" }}
             onClick={(e) => e.stopPropagation()}
-          >
-            <source
-              srcSet={`/hobbies/${imageFilenames[current]}.avif`}
-              type="image/avif"
-            />
-            <source
-              srcSet={`/hobbies/${imageFilenames[current]}.webp`}
-              type="image/webp"
-            />
-            <img
-              src={`/hobbies/${imageFilenames[current]}.jpeg`}
-              alt={`Hobby ${current + 1}`}
-              tabIndex={0}
-              className="max-w-full max-h-[90vh] object-contain"
-            />
-          </picture>
+          />
         </div>
       )}
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">

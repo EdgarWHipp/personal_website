@@ -5,7 +5,7 @@ const experiences = [
   {
     title: "IT Consulting Intern",
     place: "PwC",
-    year: "February 2025 - Juli 2025",
+    year: "February 2025 - July 2025",
   },
   {
     title: "Invited AI Hackathon Participant",

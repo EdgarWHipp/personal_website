@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 
 const infoText = `Hi, I'm Edgar.
-Currently a Master's student at KIT, focusing on HCI and automation.
-I'll probably solve a few problems on my journey.`;
+I work at a Berlin startup where I build AI secretaries.
+On the side, I explore HCI and digital afterlife research. Both keep me up at night in the best way.`;
 
 const hobbyImages = [
   "/hobbies/bb4cb569-c469-4ca4-a825-9960ad865329.avif",
@@ -407,8 +407,11 @@ export default function Info() {
           </a>
         </div>
 
-        {/* POMODORO nav link (Header Right) */}
-        <a href="/pomodoro" className="pom-link" style={{ fontFamily: "system-ui, sans-serif" }}>pomodoro</a>
+        {/* POMODORO + BLOG nav links (Header Right) */}
+        <div style={{ position: "absolute", top: "1.5rem", right: "1.5rem", display: "flex", alignItems: "center", gap: "12px" }}>
+          <a href="/blog" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>blog</a>
+          <a href="/pomodoro" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>pomodoro</a>
+        </div>
 
         <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-5 px-4">
           {/* Edgar Hipp title */}
