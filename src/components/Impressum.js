@@ -98,14 +98,14 @@ export default function Impressum() {
           <section className="border-t border-neutral-200 pt-6 mt-8">
             <p className="text-xs text-neutral-500 text-center">
               Letzte Aktualisierung: {new Date().toLocaleDateString('de-DE')}<br />
-              © {new Date().getFullYear()} Edgar H. - Alle Rechte vorbehalten
+              ©2026 Edgar Hipp. No rights reserved.
             </p>
           </section>
         </div>
       </div>
       
       <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
-        ©{new Date().getFullYear()} Edgar H. Site by Coolify, Cloudflare
+        ©2026 Edgar Hipp. No rights reserved.
       </footer>
     </div>
   );

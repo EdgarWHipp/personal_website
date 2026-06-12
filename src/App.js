@@ -7,6 +7,8 @@ import Hobbies from "./components/Hobbies";
 import Impressum from "./components/Impressum";
 import Pomodoro from "./components/Pomodoro";
 import Blog from "./components/Blog";
+import Books from "./components/Books";
+import Papers from "./components/Papers";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/experience" element={<Experience />} />
         <Route path="/hobbies" element={<Hobbies />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/books" element={<Books />} />
+        <Route path="/papers" element={<Papers />} />
         <Route path="/legal_notice" element={<Impressum />} />
         <Route path="/impressum" element={<Impressum />} />
         <Route path="/pomodoro" element={<Pomodoro />} />

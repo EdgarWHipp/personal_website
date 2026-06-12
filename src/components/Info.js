@@ -407,9 +407,11 @@ export default function Info() {
           </a>
         </div>
 
-        {/* POMODORO + BLOG nav links (Header Right) */}
+        {/* Header Right nav links */}
         <div style={{ position: "absolute", top: "1.5rem", right: "1.5rem", display: "flex", alignItems: "center", gap: "12px" }}>
           <a href="/blog" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>blog</a>
+          <a href="/books" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>books</a>
+          <a href="/papers" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>papers</a>
           <a href="/pomodoro" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>pomodoro</a>
         </div>
 
