@@ -409,8 +409,7 @@ export default function Info() {
 
         {/* Header Right nav links */}
         <div style={{ position: "absolute", top: "1.5rem", right: "1.5rem", display: "flex", alignItems: "center", gap: "12px" }}>
-          <a href="/blog" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>blog</a>
-          <a href="/papers" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>papers</a>
+          <a href="/research" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>research + me</a>
           <a href="/pomodoro" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>pomodoro</a>
         </div>
 
@@ -724,6 +723,7 @@ export default function Info() {
 
           </div>
         </footer>
+
 
         <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
           ©{new Date().getFullYear()} Edgar Hipp. No rights reserved.

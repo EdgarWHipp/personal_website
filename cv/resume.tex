@@ -1,0 +1,97 @@
+% Edgar Hipp — one-page resume
+% Source of truth for public/Resume___one_page-14.pdf
+% Build: pdflatex -output-directory=cv cv/resume.tex  (then copy PDF to public/)
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.6cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lmodern}
+
+\definecolor{ink}{HTML}{1A1A1A}
+\definecolor{muted}{HTML}{555555}
+\definecolor{rule}{HTML}{CCCCCC}
+\color{ink}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Section headings with a thin rule
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{2pt}{\color{rule}\titlerule[0.8pt]}]
+\titlespacing{\section}{0pt}{10pt}{6pt}
+
+% \cventry{org}{location}{role}{dates}{detail}
+\newcommand{\cventry}[5]{%
+  \noindent{\bfseries #1}\hfill{\small\color{muted} #2}\\[1pt]
+  {\itshape #3}\hfill{\small\color{muted} #4}%
+  \ifx\relax#5\relax\else\\[2pt]{\small #5}\fi
+  \par\vspace{6pt}%
+}
+
+% \edu{school}{location}{program}{dates}
+\newcommand{\edu}[4]{%
+  \noindent{\bfseries #1}\hfill{\small\color{muted} #2}\\[1pt]
+  {\itshape #3}\hfill{\small\color{muted} #4}\par\vspace{6pt}%
+}
+
+\begin{document}
+
+% ── Header ──
+\begin{center}
+  {\LARGE\bfseries Edgar Hipp}\\[4pt]
+  {\small\color{muted}%
+    \href{mailto:edgarhipp@online.de}{edgarhipp@online.de}
+    \quad\textbullet\quad
+    \href{https://www.linkedin.com/in/edgar-hipp-b850aa200/}{linkedin.com/in/edgar-hipp}%
+  }
+\end{center}
+\vspace{2pt}
+
+% ── Experience ──
+\section*{Experience}
+
+\cventry{HalloPetra}{Berlin, Germany}{Lead Integration \& Automation Engineer}{July 2026 -- present}{%
+Leading integration and automation efforts; building and operating the systems that connect the product's services and workflows.}
+
+\cventry{PwC}{Europe}{IT Consulting Intern}{February 2025 -- July 2025}{%
+IT audit for corporations; client-facing migration of SAP/S4HANA and other software systems.}
+
+\cventry{AI Hackathon Berlin (Tech: Europe)}{Berlin, Germany}{Participant (invited)}{Apr.\ 2025; Feb.\ 2025}{%
+Built a B2B financial recommender that uses the signal-to-noise ratio on covariance matrices to minimize risk spread over time. Gemini 2.0 Flash, TypeScript, Tailwind.}
+
+\cventry{SAP SE}{Karlsruhe, Germany}{Cloud Software Engineer -- Working Student}{October 2023 -- October 2024}{%
+Evaluated availability of cloud services, ran integration tests for uninterrupted operations, and planned performance testing for a SAP SaaS. Bash, Java, Apache JMeter, Kubernetes, Docker, Jenkins, Jira, Git.}
+
+\cventry{Microsoft}{Remote}{Student Learn Ambassador}{July 2023 -- February 2024}{%
+Onboarded new students to the program and built presentations across computer-science topics. Azure, PowerPoint, Excel, presentation skills, AI.}
+
+\cventry{1\&1 SE}{Karlsruhe, Germany}{Data Analyst -- Working Student}{October 2022 -- September 2023}{%
+Worked in the advanced enterprise analytics branch, delivering insights with state-of-the-art tooling. Python, SQL, Automic, Jenkins, Jira, Bitbucket, Git, Power BI, SAP, Confluence.}
+
+\cventry{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Teaching Assistant -- Grundbegriffe der Informatik}{October 2021 -- March 2022}{%
+Ran a weekly tutorial for 20 students and marked exercises to prepare them for the exam. Graph theory, mathematics, finite state machines.}
+
+% ── Education ──
+\section*{Education}
+
+\edu{East China University of Science and Technology (ECUST)}{Shanghai, China}{Business Administration, Young Excellent Scholars Program --- GPA 3.6/4.0}{September 2025 -- March 2026}
+
+\edu{\'Ecole pour l'informatique et les techniques avanc\'ees (EPITA)}{Paris, France}{Computer Science and Business Master --- Grade: Very Good}{September 2024 -- January 2025}
+
+\edu{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Computer Science and Business Master --- Grade: 1.6}{October 2023 -- present}
+
+\edu{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Computer Science Bachelor}{October 2019 -- October 2023}
+
+\edu{Leipzig International School}{Leipzig, Germany}{International Baccalaureate (IBDP) --- taught in English}{2017 -- 2019}
+
+% ── Skills ──
+\section*{Skills \& Languages}
+\noindent
+{\bfseries Tech stack:}\ Python, TypeScript, Next.js, Docker, Cloudflare, Kubernetes, Supabase, Vercel.\\[3pt]
+{\bfseries Languages:}\ English (native), German (native), French (B1), Chinese (HSK2).\\[3pt]
+{\bfseries Interests:}\ hiking, weight training, nutrition, gardening, tennis.
+
+\end{document}
