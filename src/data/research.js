@@ -19,13 +19,8 @@ export const projects = [
       "I came away believing speculative design isn't about predicting the future so much as making it concrete enough to argue about. What we sketched together became a shared vocabulary for grief and technology — and a design brief rooted in how people actually mourn, not in whatever happens to be easy to render.",
     ],
     gallery: [
-      { src: "/figures/ws1_workshop_overview.jpg", caption: "Leipzig, room overview." },
-      { src: "/figures/ws1_groupwork.jpg", caption: "Leipzig, working through ideas." },
-      { src: "/figures/ws2_workshop_overview.jpg", caption: "Munich, room overview." },
       { src: "/figures/ws1_futurescone_activity.jpg", caption: "Leipzig, futures-cone activity." },
-      { src: "/figures/ws1_pairwork.jpg", caption: "Leipzig, pair work." },
-      { src: "/figures/ws1_presentation.jpg", caption: "Leipzig, presenting concepts." },
-      { src: "/figures/ws1_presentation_discussion.jpg", caption: "Leipzig, discussion after presentations." },
+      { src: "/figures/ws2_workshop_overview.jpg", caption: "Munich, room overview." },
     ],
   },
 ];
