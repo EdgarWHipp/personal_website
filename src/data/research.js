@@ -10,8 +10,6 @@ export const projects = [
     summary:
       "My Master's thesis started with a question that made people pause at dinner: when a pet dies, what do we keep — and could extended reality hold onto any of it? To keep it honest, I ran two workshops in Leipzig and Munich with a wonderfully mismatched group of people and let their arguments about grief, memory, and taste steer the design.",
     // Detail page content.
-    hero: "/figures/ws2_workshop_overview.jpg",
-    heroCaption: "Workshop in Munich.",
     body: [
       "It's a strange question to sit with: when a pet dies, what do we actually want to keep, and could extended reality hold onto any of it? I chose it on purpose. A question like that pulls the real conversations — about grief, memory, and what we owe the things we love — into the room before anyone starts talking about headsets or file formats.",
       "So instead of guessing at an answer alone, I ran two workshops, one in Leipzig and one in Munich, and worked through the question with people out loud.",
