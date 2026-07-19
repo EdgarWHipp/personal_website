@@ -410,7 +410,6 @@ export default function Info() {
         {/* Header Right nav links */}
         <div style={{ position: "absolute", top: "1.5rem", right: "1.5rem", display: "flex", alignItems: "center", gap: "12px" }}>
           <a href="/research" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>research + me</a>
-          <a href="/pomodoro" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>pomodoro</a>
         </div>
 
         <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-5 px-4">
