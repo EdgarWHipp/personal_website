@@ -54,17 +54,17 @@ export default function Research() {
           </h2>
 
           <div className="flex flex-col gap-5 mb-16" style={serif}>
-            <p className="text-base text-neutral-700 leading-[1.7]">
+            <p className="text-lg text-neutral-700 leading-[1.7]">
               I spent half a year in Shanghai — learning Chinese and immersing
               myself — and left slightly obsessed with two things: the wet
               markets and the models coming out of Chinese labs.
             </p>
-            <p className="text-base text-neutral-700 leading-[1.7]">
+            <p className="text-lg text-neutral-700 leading-[1.7]">
               The seafood markets got me first — tanks of live fish, mantis
               shrimp still twitching, vendors who could gut a fish faster than I
               could point at it.
             </p>
-            <p className="text-base text-neutral-700 leading-[1.7]">
+            <p className="text-lg text-neutral-700 leading-[1.7]">
               The AI came next, and it rhymes. While everyone watched San
               Francisco, Chinese labs quietly shipped some of the most
               interesting open work of the last two years.{" "}

@@ -79,7 +79,7 @@ export default function ResearchDetail() {
             {project.body.map((paragraph, idx) => (
               <p
                 key={idx}
-                className="text-base text-neutral-700 leading-[1.75]"
+                className="text-lg text-neutral-700 leading-[1.75]"
                 style={serif}
               >
                 {paragraph}
