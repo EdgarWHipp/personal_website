@@ -6,24 +6,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Courier Prime";
-  src: url("../assets/fonts/courier-prime-regular.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-/* Light CJK glyphs for 三亚, 上海 and 福州; keep the caption subset small. */
-@font-face {
-  font-family: "Noto Sans SC";
-  src: url("../assets/fonts/noto-sans-sc-light-cities.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  unicode-range: U+4E09, U+4E0A, U+4E9A, U+5DDE, U+6D77, U+798F;
-}
-
 .home-page {
   height: 100svh;
   box-sizing: border-box;
@@ -144,20 +126,14 @@
   margin-top: 25px;
   text-align: center;
   font:
-    10px "Courier Prime", "Noto Sans SC",
+    10px "Courier New",
     monospace;
   letter-spacing: 0.04em;
-  color: #514e43;
+  color: #6e6b60;
 }
 .tv-original-caption,
 .still-tv figcaption {
-  font-size: max(10px, calc(10px / var(--tv-scale, 1)));
-  font-synthesis: none;
-  text-wrap: balance;
-}
-.caption-location {
-  display: inline-block;
-  white-space: nowrap;
+  font-size: clamp(10px, calc(10px / var(--tv-scale, 1)), 16px);
 }
 .still-tv {
   min-width: 0;
@@ -275,7 +251,7 @@
   z-index: 1;
   color: #e6e9ca;
   font:
-    8px "Courier Prime", "Noto Sans SC",
+    8px "Courier New",
     monospace;
   letter-spacing: 0.08em;
   text-shadow: 0 0 3px #d6deb480;
@@ -303,7 +279,7 @@
 .still-tv__brand {
   flex: 1;
   font:
-    7px "Courier Prime", "Noto Sans SC",
+    7px "Courier New",
     monospace;
   color: #e8e5d780;
   text-align: center;
@@ -328,10 +304,10 @@
 .still-tv figcaption {
   margin-top: 21px;
   font:
-    max(10px, calc(10px / var(--tv-scale, 1))) "Courier Prime", "Noto Sans SC",
+    clamp(10px, calc(10px / var(--tv-scale, 1)), 16px) "Courier New",
     monospace;
   letter-spacing: 0.04em;
-  color: #514e43;
+  color: #6e6b60;
   text-align: center;
 }
 .home-footer {
@@ -341,9 +317,9 @@
   justify-content: space-between;
   gap: 24px;
   font:
-    11px/1.8 "Courier Prime", "Noto Sans SC",
+    10px/1.8 "Courier New",
     monospace;
-  color: #514e43;
+  color: #6e6b60;
 }
 .home-footer p:last-child {
   text-align: right;
@@ -448,7 +424,7 @@
     font-size: 6px;
   }
   .home-footer {
-    font-size: 10px;
+    font-size: 9px;
     gap: 16px;
   }
 }

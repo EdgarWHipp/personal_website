@@ -222,7 +222,7 @@ export default function Info() {
           mix-blend-mode: hard-light;
         }
         .track-bar { animation: trackBar 0.42s linear forwards; }
-        .mono { font-family: 'Share Tech Mono', 'Noto Sans SC', monospace; }
+        .mono { font-family: 'Share Tech Mono', 'Courier New', monospace; }
         .loc-tag { animation: locationFade ${CYCLE_INTERVAL}ms ease forwards; }
         .pom-link {
           position: absolute;
@@ -654,11 +654,7 @@ export default function Info() {
 
 
             </div>
-            <p className="tv-original-caption">
-              01{imageLocations.map(location => (
-                <span className="caption-location" key={location}> / {location}</span>
-              ))}
-            </p>
+            <p className="tv-original-caption">01 / {imageLocations.join(" / ")}</p>
           </div>
           <StillTelevision
             color="red"
