@@ -1,23 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
+import StillTelevision from "./StillTelevision";
+import TVGallery from "./TVGallery";
+import "./Info.css";
 
-const infoText = `Hi, I'm Edgar.
-I work at a Berlin startup where I build AI secretaries.
-On the side, I explore HCI and digital afterlife research. Both keep me up at night in the best way.`;
+const infoText = `I work on AI and messaging infrastructure in Berlin, between software, business, and the people using it.`;
 
 const hobbyImages = [
-  "/hobbies/bb4cb569-c469-4ca4-a825-9960ad865329.avif",
   "/hobbies/IMG_6215(1).jpg",
-  "/hobbies/IMG_8418.jpg",
-  "/hobbies/IMG_8661.jpg",
   "/hobbies/me.jpeg",
+  "/hobbies/bb4cb569-c469-4ca4-a825-9960ad865329.avif",
 ];
 
 const imageLocations = [
-  "SCQ",
   "三亚",
-  "福州",
-  "福州",
   "上海",
+  "San Sebastián",
 ];
 
 const CYCLE_INTERVAL = 3500;
@@ -247,21 +244,9 @@ export default function Info() {
         .pom-link:hover { transform: scale(1.08); color: #f97316; }
       `}</style>
 
-      <div
-        className="text-xs md:text-sm font-normal text-neutral-700 dark:text-white text-center leading-relaxed"
-        style={{ paddingTop: "16vh", fontFamily: "Georgia, serif" }}
-      >
-        {/* Social Links & CV (Header Left) */}
-        <div
-          style={{
-            position: "absolute",
-            top: "1.5rem",
-            left: "1.5rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-          }}
-        >
+      <div className="home-page">
+        <header className="home-header">
+        <div className="home-socials">
           {/* Mail */}
           <a
             href="mailto:edgarhipp@protonmail.com"
@@ -407,28 +392,33 @@ export default function Info() {
           </a>
         </div>
 
-        {/* Header Right nav links */}
-        <div style={{ position: "absolute", top: "1.5rem", right: "1.5rem", display: "flex", alignItems: "center", gap: "12px" }}>
-          <a href="/research" className="pom-link" style={{ fontFamily: "system-ui, sans-serif", position: "static" }}>research + me</a>
+        <div className="home-header-right">
+        <nav className="home-nav" aria-label="Main navigation">
+          <a href="/research" className="pom-link">research + me</a>
+        <a className="home-phone" href="tel:+493082686193" aria-label="Call 030 82686193" title="030 82686193">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.79a2 2 0 0 1-.45 2.11L8.09 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.58 2.79.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+        </a>
+        </nav>
         </div>
+        </header>
 
-        <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-5 px-4">
-          {/* Edgar Hipp title */}
-
-
-          {/* Header Content Section (Shifted Upwards) */}
-          <div className="flex flex-col items-center gap-8 -mt-18 mb-10">
-            {/* Bio */}
-            <p
-              className="text-sm md:text-base font-normal text-neutral-700 dark:text-neutral-300 text-center leading-relaxed"
-              style={{ maxWidth: "32rem" }}
-            >
-              {infoText}
-            </p>
+        <main className="home-main">
+          <div className="home-intro">
+            <h1>Hi, I’m Edgar.</h1>
+            <p>{infoText}</p>
           </div>
 
-          {/* ── CRT TV ── */}
-          <div className="mt-29 md:mt-12" style={{ perspective: "950px", perspectiveOrigin: "50% 45%" }}>
+          <TVGallery>
+          <StillTelevision
+            color="green"
+            image="/hobbies/IMG_8661.jpg"
+            alt="Cable cars above Fuzhou, with Edgar in the foreground"
+            caption="02 / 福州"
+            channel="02"
+          />
+          <div className="tv-original" style={{ perspective: "950px", perspectiveOrigin: "50% 45%" }}>
             <div
               style={{
                 position: "relative",
@@ -702,30 +692,21 @@ export default function Info() {
 
 
             </div>
+            <p className="tv-original-caption">01 / {imageLocations.join(" / ")}</p>
           </div>
-          {/* ── end TV ── */}
+          <StillTelevision
+            color="red"
+            image="/hobbies/IMG_8418.jpg"
+            alt="Edgar photographing a drawing in a quiet room in Fuzhou"
+            caption="03 / 福州"
+            channel="03"
+          />
+          </TVGallery>
+        </main>
 
-        </div>
-
-        {/* Footer */}
-        <footer
-          className="absolute left-0 w-full flex justify-center select-none"
-          style={{ bottom: "4.5rem" }}
-        >
-          <div className="w-full max-w-xl mx-auto flex flex-row justify-between items-end px-4 text-xs text-neutral-500">
-            <div className="text-left leading-tight">
-              <span className="card-line-1">Berlin, Germany</span><br />
-              <span className="card-line-2">Edgar Hipp</span><br />
-              <span className="card-line-3">Software Engineer</span><br />
-
-            </div>
-
-          </div>
-        </footer>
-
-
-        <footer className="absolute bottom-8 left-0 w-full flex justify-center text-xs text-gray-300 select-none">
-          ©{new Date().getFullYear()} Edgar Hipp. No rights reserved.
+        <footer className="home-footer">
+          <p>Edgar Hipp<br />Berlin, Germany</p>
+          <p>© {new Date().getFullYear()}<br />No rights reserved.</p>
         </footer>
       </div>
     </>
