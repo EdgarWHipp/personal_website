@@ -406,7 +406,7 @@ export default function Info() {
 
         <main className="home-main">
           <div className="home-intro">
-            <h1>Hi, I’m Edgar.</h1>
+            <h1>Hi, I’m Eddy.</h1>
             <p>{infoText}</p>
           </div>
 
