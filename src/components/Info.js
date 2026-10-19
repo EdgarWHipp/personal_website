@@ -82,7 +82,6 @@ export default function Info() {
   const [fading, setFading] = useState(false);
   const [glitch, setGlitch] = useState(false);
   const [trackingShift, setTrackingShift] = useState(false);
-  const [recVisible, setRecVisible] = useState(true);
 
   const currentRef = useRef(0);
   const timerRef = useRef(null);
@@ -92,11 +91,6 @@ export default function Info() {
     const tick = () => setTime(new Date().toLocaleTimeString("en-GB", { hour12: false }));
     tick();
     const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => setRecVisible(v => !v), 900);
     return () => clearInterval(id);
   }, []);
 
@@ -228,7 +222,7 @@ export default function Info() {
           mix-blend-mode: hard-light;
         }
         .track-bar { animation: trackBar 0.42s linear forwards; }
-        .mono { font-family: 'Share Tech Mono', 'Courier New', monospace; }
+        .mono { font-family: 'Share Tech Mono', 'Noto Sans SC', monospace; }
         .loc-tag { animation: locationFade ${CYCLE_INTERVAL}ms ease forwards; }
         .pom-link {
           position: absolute;
@@ -246,7 +240,7 @@ export default function Info() {
 
       <div className="home-page">
         <header className="home-header">
-        <div className="home-socials">
+        <nav className="home-socials" aria-label="Contact and profiles">
           {/* Mail */}
           <a
             href="mailto:edgarhipp@protonmail.com"
@@ -272,8 +266,6 @@ export default function Info() {
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
             </svg>
           </a>
-
-          <span style={{ color: "rgba(180,178,174,0.35)", fontSize: 13, userSelect: "none" }}>·</span>
 
           {/* CV */}
           <a
@@ -304,8 +296,6 @@ export default function Info() {
             cv
           </a>
 
-          <span style={{ color: "rgba(180,178,174,0.35)", fontSize: 13, userSelect: "none" }}>·</span>
-
           {/* X / Twitter */}
           <a
             href="https://x.com/Edgar_Hipp"
@@ -332,8 +322,6 @@ export default function Info() {
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L2.25 2.25h6.893l4.255 5.623zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
           </a>
-
-          <span style={{ color: "rgba(180,178,174,0.35)", fontSize: 13, userSelect: "none" }}>·</span>
 
           {/* GitHub */}
           <a
@@ -362,8 +350,6 @@ export default function Info() {
             </svg>
           </a>
 
-          <span style={{ color: "rgba(180,178,174,0.35)", fontSize: 13, userSelect: "none" }}>·</span>
-
           {/* LinkedIn */}
           <a
             href="https://www.linkedin.com/in/edgar-hipp-b850aa200/"
@@ -390,17 +376,12 @@ export default function Info() {
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
             </svg>
           </a>
-        </div>
-
-        <div className="home-header-right">
-        <nav className="home-nav" aria-label="Contact">
         <a className="home-phone" href="tel:+493082686193" aria-label="Call 030 82686193" title="030 82686193">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.79a2 2 0 0 1-.45 2.11L8.09 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.58 2.79.7A2 2 0 0 1 22 16.92z" />
           </svg>
         </a>
         </nav>
-        </div>
         </header>
 
         <main className="home-main">
@@ -573,24 +554,6 @@ export default function Info() {
                       "linear-gradient(130deg, rgba(255,255,255,0.05) 0%, transparent 45%)",
                   }} />
 
-                  {/* OSD — REC */}
-                  <div className="mono" style={{
-                    position: "absolute", top: 6, right: 8, zIndex: 16,
-                    fontSize: "8px", letterSpacing: "0.12em",
-                    color: recVisible ? "#ff2020" : "transparent",
-                    textShadow: recVisible ? "0 0 5px #ff2020" : "none",
-                    userSelect: "none",
-                    display: "flex", alignItems: "center", gap: "3px",
-                  }}>
-                    <span style={{
-                      width: 6, height: 6, borderRadius: "50%",
-                      background: recVisible ? "#ff2020" : "transparent",
-                      boxShadow: recVisible ? "0 0 5px #ff4040" : "none",
-                      display: "inline-block",
-                    }} />
-                    REC
-                  </div>
-
                   {/* OSD — PLAY */}
                   <div className="mono" style={{
                     position: "absolute", top: 6, left: 8, zIndex: 16,
@@ -691,7 +654,11 @@ export default function Info() {
 
 
             </div>
-            <p className="tv-original-caption">01 / {imageLocations.join(" / ")}</p>
+            <p className="tv-original-caption">
+              01{imageLocations.map(location => (
+                <span className="caption-location" key={location}> / {location}</span>
+              ))}
+            </p>
           </div>
           <StillTelevision
             color="red"

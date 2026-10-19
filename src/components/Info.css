@@ -6,6 +6,24 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Courier Prime";
+  src: url("../assets/fonts/courier-prime-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Light CJK glyphs for 三亚, 上海 and 福州; keep the caption subset small. */
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("../assets/fonts/noto-sans-sc-light-cities.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  unicode-range: U+4E09, U+4E0A, U+4E9A, U+5DDE, U+6D77, U+798F;
+}
+
 .home-page {
   height: 100svh;
   box-sizing: border-box;
@@ -43,17 +61,12 @@
   align-items: center;
   gap: 6px;
 }
-.home-header-right {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
 .home-phone {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   color: #5f5d53;
   text-decoration: none;
 }
@@ -67,20 +80,6 @@
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
-}
-.home-nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.home-nav .pom-link {
-  position: static;
-  color: #5f5d53;
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-}
-.home-nav .pom-link:hover {
-  color: #8c4c42;
 }
 .home-page a:focus-visible,
 .home-page button:focus-visible {
@@ -145,14 +144,20 @@
   margin-top: 25px;
   text-align: center;
   font:
-    10px "Courier New",
+    10px "Courier Prime", "Noto Sans SC",
     monospace;
   letter-spacing: 0.04em;
-  color: #6e6b60;
+  color: #514e43;
 }
 .tv-original-caption,
 .still-tv figcaption {
-  font-size: clamp(10px, calc(10px / var(--tv-scale, 1)), 16px);
+  font-size: max(10px, calc(10px / var(--tv-scale, 1)));
+  font-synthesis: none;
+  text-wrap: balance;
+}
+.caption-location {
+  display: inline-block;
+  white-space: nowrap;
 }
 .still-tv {
   min-width: 0;
@@ -270,7 +275,7 @@
   z-index: 1;
   color: #e6e9ca;
   font:
-    8px "Courier New",
+    8px "Courier Prime", "Noto Sans SC",
     monospace;
   letter-spacing: 0.08em;
   text-shadow: 0 0 3px #d6deb480;
@@ -298,7 +303,7 @@
 .still-tv__brand {
   flex: 1;
   font:
-    7px "Courier New",
+    7px "Courier Prime", "Noto Sans SC",
     monospace;
   color: #e8e5d780;
   text-align: center;
@@ -323,10 +328,10 @@
 .still-tv figcaption {
   margin-top: 21px;
   font:
-    clamp(10px, calc(10px / var(--tv-scale, 1)), 16px) "Courier New",
+    max(10px, calc(10px / var(--tv-scale, 1))) "Courier Prime", "Noto Sans SC",
     monospace;
   letter-spacing: 0.04em;
-  color: #6e6b60;
+  color: #514e43;
   text-align: center;
 }
 .home-footer {
@@ -336,9 +341,9 @@
   justify-content: space-between;
   gap: 24px;
   font:
-    10px/1.8 "Courier New",
+    11px/1.8 "Courier Prime", "Noto Sans SC",
     monospace;
-  color: #6e6b60;
+  color: #514e43;
 }
 .home-footer p:last-child {
   text-align: right;
@@ -414,38 +419,13 @@
   }
 }
 @media (max-width: 700px) {
-  .home-header {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 2px 8px;
-  }
-  .home-header-right {
-    display: contents;
-  }
   .home-socials {
-    grid-column: 1;
-    grid-row: 1;
-    gap: 2px;
+    gap: 8px;
   }
   .home-socials a {
     width: 24px !important;
     height: 28px !important;
     padding: 0 !important;
-  }
-  .home-socials > span {
-    font-size: 9px !important;
-  }
-  .home-nav {
-    grid-column: 2;
-    grid-row: 1;
-    justify-content: flex-start;
-    width: auto;
-    gap: 12px;
-  }
-  .home-nav .pom-link {
-    font-size: 10px;
-    letter-spacing: 0.04em;
   }
 }
 @media (max-width: 480px) {
@@ -468,7 +448,7 @@
     font-size: 6px;
   }
   .home-footer {
-    font-size: 9px;
+    font-size: 10px;
     gap: 16px;
   }
 }
