@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.c12e3f62.css",
+    "main.css": "/static/css/main.a3018b0e.css",
     "main.js": "/static/js/main.16e07f5f.js",
+    "static/media/im-fell-english-regular.ttf": "/static/media/im-fell-english-regular.200707d19e73f84f9a4b.ttf",
     "index.html": "/index.html",
-    "main.c12e3f62.css.map": "/static/css/main.c12e3f62.css.map",
+    "main.a3018b0e.css.map": "/static/css/main.a3018b0e.css.map",
     "main.16e07f5f.js.map": "/static/js/main.16e07f5f.js.map"
   },
   "entrypoints": [
-    "static/css/main.c12e3f62.css",
+    "static/css/main.a3018b0e.css",
     "static/js/main.16e07f5f.js"
   ]
 }

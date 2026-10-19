@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "IM Fell English";
+  src: url("../assets/fonts/im-fell-english-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 .home-page {
   height: 100svh;
   box-sizing: border-box;
@@ -97,9 +105,10 @@
   text-align: center;
 }
 .home-intro h1 {
+  font-family: "IM Fell English", Georgia, serif;
   font-size: clamp(28px, 5.4svh, 54px);
   font-weight: 400;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.015em;
   line-height: 1.1;
   margin: 0 0 clamp(8px, 1.5svh, 16px);
 }
