@@ -5,7 +5,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=1.6cm]{geometry}
+\usepackage[left=1.6cm,right=1.6cm,top=1.3cm,bottom=1.3cm]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{xcolor}
@@ -28,13 +28,13 @@
   \noindent{\bfseries #1}\hfill{\small\color{muted} #2}\\[1pt]
   {\itshape #3}\hfill{\small\color{muted} #4}%
   \ifx\relax#5\relax\else\\[2pt]{\small #5}\fi
-  \par\vspace{4pt}%
+  \par\vspace{3pt}%
 }
 
 % \edu{school}{location}{program}{dates}
 \newcommand{\edu}[4]{%
   \noindent{\bfseries #1}\hfill{\small\color{muted} #2}\\[1pt]
-  {\itshape #3}\hfill{\small\color{muted} #4}\par\vspace{4pt}%
+  {\itshape #3}\hfill{\small\color{muted} #4}\par\vspace{3pt}%
 }
 
 \begin{document}
@@ -58,8 +58,9 @@ Master's graduate in Computer Science and Business (KIT), with experience in clo
 \section*{Experience}
 
 \cventry{HalloPetra}{Berlin, Germany}{Lead Integration \& Automation Engineer}{July 2026 -- present}{%
-Contribute to the customer voice pipeline, integrating telephony, speech recognition, and language models. Develop customer-facing WhatsApp functionality and connect messaging with product workflows. Build a support-ticket system that routes low-priority customer issues into automated resolution inside OpenAI sandboxes.\\[2pt]
-Work within a RAG-enabled product: chat combines semantic and keyword search with model-based relevance filtering; phone calls use direct document retrieval backed by OpenAI vector stores.}
+Contribute to the customer voice pipeline on a platform recording approximately 380,000 call minutes per month, integrating telephony, speech recognition, and language models. Develop customer-facing WhatsApp functionality for a platform handling 25,000+ incoming and delivered outgoing messages per month. Build a support-ticket system that routes low-priority customer issues into automated resolution inside OpenAI sandboxes.\\[2pt]
+Work within a RAG-enabled product: chat combines semantic and keyword search with model-based relevance filtering; phone calls use direct document retrieval backed by OpenAI vector stores.\\[1pt]
+{\footnotesize\color{muted}Usage figures: platform-wide totals for October 2026.}}
 
 \cventry{PwC}{Europe}{IT Consulting Intern}{February 2025 -- July 2025}{%
 Contributed to corporate IT audits and client-facing migration work involving SAP S/4HANA and other enterprise software.}
