@@ -21,20 +21,20 @@
 
 % Section headings with a thin rule
 \titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{2pt}{\color{rule}\titlerule[0.8pt]}]
-\titlespacing{\section}{0pt}{10pt}{6pt}
+\titlespacing{\section}{0pt}{8pt}{5pt}
 
 % \cventry{org}{location}{role}{dates}{detail}
 \newcommand{\cventry}[5]{%
   \noindent{\bfseries #1}\hfill{\small\color{muted} #2}\\[1pt]
   {\itshape #3}\hfill{\small\color{muted} #4}%
   \ifx\relax#5\relax\else\\[2pt]{\small #5}\fi
-  \par\vspace{6pt}%
+  \par\vspace{4pt}%
 }
 
 % \edu{school}{location}{program}{dates}
 \newcommand{\edu}[4]{%
   \noindent{\bfseries #1}\hfill{\small\color{muted} #2}\\[1pt]
-  {\itshape #3}\hfill{\small\color{muted} #4}\par\vspace{6pt}%
+  {\itshape #3}\hfill{\small\color{muted} #4}\par\vspace{4pt}%
 }
 
 \begin{document}
@@ -46,51 +46,57 @@
     \href{mailto:edgarhipp@online.de}{edgarhipp@online.de}
     \quad\textbullet\quad
     \href{https://www.linkedin.com/in/edgar-hipp-b850aa200/}{linkedin.com/in/edgar-hipp}%
+    \quad\textbullet\quad
+    \href{https://ehipp.dev}{ehipp.dev}
   }
 \end{center}
 \vspace{2pt}
+{\small Software engineer based in Berlin, working on voice, messaging, and support automation at HalloPetra.
+Master's graduate in Computer Science and Business (KIT), with experience in cloud engineering and data analytics.\par}
 
 % ── Experience ──
 \section*{Experience}
 
 \cventry{HalloPetra}{Berlin, Germany}{Lead Integration \& Automation Engineer}{July 2026 -- present}{%
-Leading integration and automation efforts; building and operating the systems that connect the product's services and workflows.}
+Contribute to the customer voice pipeline, integrating telephony, speech recognition, and language models. Develop customer-facing WhatsApp functionality and connect messaging with product workflows. Build a support-ticket system that routes low-priority customer issues into automated resolution inside OpenAI sandboxes.\\[2pt]
+Work within a RAG-enabled product: chat combines semantic and keyword search with model-based relevance filtering; phone calls use direct document retrieval backed by OpenAI vector stores.}
 
 \cventry{PwC}{Europe}{IT Consulting Intern}{February 2025 -- July 2025}{%
-IT audit for corporations; client-facing migration of SAP/S4HANA and other software systems.}
+Contributed to corporate IT audits and client-facing migration work involving SAP S/4HANA and other enterprise software.}
 
-\cventry{AI Hackathon Berlin (Tech: Europe)}{Berlin, Germany}{Participant (invited)}{Apr.\ 2025; Feb.\ 2025}{%
-Built a B2B financial recommender that uses the signal-to-noise ratio on covariance matrices to minimize risk spread over time. Gemini 2.0 Flash, TypeScript, Tailwind.}
+\cventry{AI Hackathons Berlin (Tech: Europe)}{Berlin, Germany}{Participant -- two hackathons}{February \& April 2025}{%
+April: developed a B2B financial recommendation prototype exploring risk allocation through signal-to-noise analysis of covariance matrices, using Gemini, TypeScript, and Tailwind. February: worked on the goldfish.ai financial recommendation prototype with Grok, TypeScript, and Tailwind.}
 
 \cventry{SAP SE}{Karlsruhe, Germany}{Cloud Software Engineer -- Working Student}{October 2023 -- October 2024}{%
-Evaluated availability of cloud services, ran integration tests for uninterrupted operations, and planned performance testing for a SAP SaaS. Bash, Java, Apache JMeter, Kubernetes, Docker, Jenkins, Jira, Git.}
+Evaluated cloud-service availability and ran integration tests to support reliable SaaS operations. Planned performance testing for an SAP SaaS application. Bash, Java, Apache JMeter, Kubernetes, Docker, Jenkins, Jira, Git.}
 
 \cventry{Microsoft}{Remote}{Student Learn Ambassador}{July 2023 -- February 2024}{%
-Onboarded new students to the program and built presentations across computer-science topics. Azure, PowerPoint, Excel, presentation skills, AI.}
+Onboarded students and prepared technical presentations on computer science topics. Azure, PowerPoint, Excel.}
 
 \cventry{1\&1 SE}{Karlsruhe, Germany}{Data Analyst -- Working Student}{October 2022 -- September 2023}{%
-Worked in the advanced enterprise analytics branch, delivering insights with state-of-the-art tooling. Python, SQL, Automic, Jenkins, Jira, Bitbucket, Git, Power BI, SAP, Confluence.}
+Worked in enterprise analytics with Python, SQL, and Power BI to deliver business insights. Used Automic, Jenkins, Bitbucket, and SAP within the team's analytics environment.}
 
 \cventry{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Teaching Assistant -- Grundbegriffe der Informatik}{October 2021 -- March 2022}{%
-Ran a weekly tutorial for 20 students and marked exercises to prepare them for the exam. Graph theory, mathematics, finite state machines.}
+Led weekly tutorials for 20 students and graded assignments covering graph theory, mathematics, and finite-state machines.}
 
 % ── Education ──
 \section*{Education}
 
+\edu{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Master's, Computer Science and Business}{October 2023 -- October 2026}
+
 \edu{East China University of Science and Technology (ECUST)}{Shanghai, China}{Business Administration, Young Excellent Scholars Program --- GPA 3.6/4.0}{September 2025 -- March 2026}
 
-\edu{\'Ecole pour l'informatique et les techniques avanc\'ees (EPITA)}{Paris, France}{Computer Science and Business Master --- Grade: Very Good}{September 2024 -- January 2025}
-
-\edu{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Computer Science and Business Master --- Grade: 1.6}{October 2023 -- present}
+\edu{\'Ecole pour l'informatique et les techniques avanc\'ees (EPITA)}{Paris, France}{Erasmus exchange, Computer Science and Business --- Grade: Very Good}{September 2024 -- January 2025}
 
 \edu{Karlsruher Institut f\"ur Technologie (KIT)}{Karlsruhe, Germany}{Computer Science Bachelor}{October 2019 -- October 2023}
-
-\edu{Leipzig International School}{Leipzig, Germany}{International Baccalaureate (IBDP) --- taught in English}{2017 -- 2019}
 
 % ── Skills ──
 \section*{Skills \& Languages}
 \noindent
-{\bfseries Tech stack:}\ Python, TypeScript, Next.js, Docker, Cloudflare, Kubernetes, Supabase, Vercel.\\[3pt]
+{\bfseries Programming:}\ Python, TypeScript, SQL, Java, Bash.\\[2pt]
+{\bfseries Web \& Cloud:}\ Next.js, Supabase, Vercel, Cloudflare, Docker, Kubernetes, Jenkins, Git.\\[2pt]
+{\bfseries AI \& Retrieval:}\ LLM integration, RAG, OpenAI vector stores, hybrid search, relevance filtering.\\[2pt]
+{\bfseries Testing \& Data:}\ Integration testing, Apache JMeter, Power BI.\\[2pt]
 {\bfseries Languages:}\ English (native), German (native), French (B1), Chinese (HSK2).\\[3pt]
 {\bfseries Interests:}\ hiking, weight training, nutrition, gardening, tennis.
 
